@@ -1,1 +1,48 @@
-<router-outlet></router-outlet>
+@if(spinnerService.isLoading()) {
+<div class="card flex justify-center">
+    <p-progress-spinner ariaLabel="loading" />
+</div>
+}
+
+<div class="flex flex-column h-screen overflow-hidden">
+
+    <header
+        class="bg-primary text-primary-contrast h-4rem flex align-items-center justify-content-between px-4 shadow-2 z-5">
+        <div class="flex align-items-center gap-3">
+            <p-button icon="pi pi-bars" [text]="true" (onClick)="toggleMenu()"
+                styleClass="text-primary-contrast hover:bg-primary-reverse-hover">
+            </p-button>
+
+            <span class="text-xl font-bold tracking-wide">GestSpace</span>
+        </div>
+
+        <div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+
+        <aside
+            class="bg-content border-right-1 border-300 transition-all transition-duration-200 overflow-x-hidden overflow-y-auto"
+            [class]="isMenuOpen() ? 'w-16rem' : 'w-5rem'">
+
+            <div class="p-3">
+                @if (isMenuOpen()) {
+                <div class="flex align-items-center gap-2 p-2 text-color">
+                    <i class="pi pi-home"></i>
+                    <span>Dashboard</span>
+                </div>
+                } @else {
+                <div class="text-center p-2 text-color" title="Dashboard">
+                    <i class="pi pi-home text-lg"></i>
+                </div>
+                }
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-surface-50 overflow-y-auto p-4">
+            <router-outlet></router-outlet>
+        </main>
+
+    </div>
+</div>
