@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from '@guards/auth.guard'; // Assicurati che il percorso sia corretto
+import { authGuard } from '@app/core/auth/auth.guard'; // Assicurati che il percorso sia corretto
 
 export const routes: Routes = [
   {
@@ -9,6 +9,7 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('@features/login/login.component').then((m) => m.LoginComponent), // Esempio di lazy loading per il login
+    loadComponent: () =>
+      import('@app/features/login/pages/login.component').then((m) => m.LoginComponent), // Esempio di lazy loading per il login
   },
 ];

@@ -8,13 +8,14 @@
     "types": [],
     "paths": {
       "@app/*": ["./src/app/*"],
+      "@core/*": ["./src/app/core/*"],
       "@environments/*": ["./src/environments/*"],
-      "@services/*": ["./src/app/services/*"],
-      "@interceptors/*": ["./src/app/interceptors/*"],
+      "@interceptors/*": ["./src/app/core/interceptors/*"],
       "@guards/*": ["./src/app/guards/*"],
       "@components/*": ["./src/app/components/*"],
       "@assets/*": ["./src/assets/*"],
-      "@features/*": ["./src/app/features/*"]
+      "@features/*": ["./src/app/features/*"],
+      "@shared/*": ["./src/app/shared/*"],
     }
   },
   "include": [

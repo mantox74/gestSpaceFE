@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { SpinnerService } from '@services/spinner.service';
+import { SpinnerService } from '@app/shared/components/spinner/spinner.service';
 import { finalize } from 'rxjs/operators';
 
 export const spinnerInterceptor: HttpInterceptorFn = (req, next) => {

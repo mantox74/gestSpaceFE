@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateChildFn, Router } from '@angular/router';
-import { AuthService } from '@services/auth.service'; // Sostituisci con il percorso reale del tuo servizio
+import { AuthService } from '@app/core/auth/auth.service'; // Sostituisci con il percorso reale del tuo servizio
 
 export const authGuard: CanActivateChildFn = (route, state) => {
   const authService = inject(AuthService);
