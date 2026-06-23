@@ -1,1 +1,23 @@
-<p>login.component works!</p>
+<p-card header="Login" class="w-full max-w-md mx-auto mt-10">
+    <form class="p-fluid flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
+            <input id="username" pInputText placeholder="Username" [formField]="loginForm.username" />
+            @if(loginForm.username().invalid() && (loginForm.username().touched() || loginForm.username().dirty()) &&
+            loginForm.username().getError('required')) {
+            <div class="text-red-500 text-sm">
+                {{ loginForm.username().getError('required')?.message }}
+            </div>
+            }
+        </div>
+        <div class="flex flex-col gap-2">
+            <input id="password" pInputText type="password" placeholder="Password" [formField]="loginForm.password" />
+            @if(loginForm.password().invalid() && (loginForm.password().touched() || loginForm.password().dirty()) &&
+            loginForm.password().getError('required')) {
+            <div class="text-red-500 text-sm">
+                {{ loginForm.password().getError('required')?.message }}
+            </div>
+            }
+        </div>
+        <p-button [disabled]="loginForm().invalid()" label="Login" (onClick)="login()" class="mt-4"></p-button>
+    </form>
+</p-card>
