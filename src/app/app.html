@@ -1,36 +1,41 @@
 <app-spinner></app-spinner>
-<div class="flex flex-column h-screen overflow-hidden">
-    <header
-        class="bg-primary text-primary-contrast h-4rem flex align-items-center justify-content-between px-4 shadow-2 z-5">
-        <div class="flex align-items-center gap-3">
-            <p-button icon="pi pi-bars" [text]="true" (onClick)="toggleMenu()"
-                styleClass="text-primary-contrast hover:bg-primary-reverse-hover">
+<div class="flex flex-col h-screen overflow-hidden">
+    <header class="bg-primary text-primary-contrast h-16 flex items-center justify-between px-4 shadow-md z-10">
+        <div class="flex items-center gap-3">
+            <p-button icon="pi pi-bars" [text]="true" [disabled]="!authService.isLoggedIn()" (onClick)="toggleMenu()"
+                styleClass="!text-primary-contrast hover:!bg-white/10">
             </p-button>
 
-            <span class="text-xl font-bold tracking-wide">GestSpace</span>
+            <span class="text-xl font-bold tracking-wide">GestSpace - Gestione spazi</span>
         </div>
 
         <div>
+            @if(authService.isLoggedIn() && authService.currentUser()) {
+            <p-avatar
+                [label]="authService.currentUser()!.nome!.charAt(0) + authService.currentUser()?.cognome?.charAt(0)"
+                class="mr-2" shape="circle" />
+            } @else {
+            <p-button icon="pi pi-sign-in" [text]="true" label="Login"
+                styleClass="!text-primary-contrast hover:!bg-white/10" (onClick)="navigateToLogin()">
+            </p-button>
+            }
         </div>
     </header>
 
     <div class="flex flex-1 overflow-hidden">
 
-        <aside
-            class="bg-content border-right-1 border-300 transition-all transition-duration-200 overflow-x-hidden overflow-y-auto"
-            [class]="isMenuOpen() ? 'w-16rem' : 'w-5rem'">
+        <aside class="bg-content border-r border-gray-300 transition-all duration-200 overflow-x-hidden overflow-y-auto"
+            [class]="isMenuOpen() ? 'w-40' : 'w-0'">
 
             <div class="p-3">
-                @if (isMenuOpen()) {
-                <div class="flex align-items-center gap-2 p-2 text-color">
-                    <i class="pi pi-home"></i>
-                    <span>Dashboard</span>
+
+                <div class="flex align-items-center gap-2 p-2 text-[var(--p-text-color)]">
+                    <a routerLink="/" pButton>
+                        <i class="pi pi-home" style="font-size: 1.25rem;"></i>
+                        <span>Dashboard</span>
+                    </a>
                 </div>
-                } @else {
-                <div class="text-center p-2 text-color" title="Dashboard">
-                    <i class="pi pi-home text-lg"></i>
-                </div>
-                }
+
             </div>
         </aside>
 

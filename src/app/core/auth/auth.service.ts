@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 
 interface UserPayload {
@@ -15,38 +15,50 @@ export class AuthService {
   // Il signal principale gestisce il token (la fonte della verità)
   private tokenSignal = signal<string | null>(localStorage.getItem('token'));
 
-  // Stato di autenticazione derivato dal token
-  isAuthenticated = computed(() => !!this.tokenSignal());
-
   // Dati utente derivati AUTOMATICAMENTE dal token
   currentUser = computed<UserPayload | null>(() => {
     const token = this.tokenSignal();
     if (!token) return null;
     try {
       return jwtDecode<UserPayload>(token);
+      // return {
+      //   nome: 'Massimiliano',
+      //   cognome: 'Mantovani',
+      //   ruolo: 'OPERATORE',
+      //   stato: 'ATTIVO',
+      // };
     } catch (e) {
       console.error('Token non valido', e);
       return null;
     }
   });
 
+  constructor() {
+    effect(() => {
+      const token = this.tokenSignal();
+      // console.log('Token aggiornato:', token);
+      token ? localStorage.setItem('token', token) : localStorage.removeItem('token');
+    });
+  }
+
   // Metodo sincrono usato dal Guard per il controllo immediato
   isLoggedIn(): boolean {
-    return this.isAuthenticated();
+    // console.log('Controllo isLoggedIn:', !!this.tokenSignal());
+    return !!this.tokenSignal();
   }
 
   /**
-   * Metodo per il login: salva il token e aggiorna lo stato di autenticazione.
+   * Metodo per il login: salva il token .
    * @param token jwt token
    */
   login(token: string) {
-    localStorage.setItem('token', token);
+    this.tokenSignal.set(token);
   }
 
   /**
-   * Metodo per il logout: rimuove il token e aggiorna lo stato di autenticazione.
+   * Metodo per il logout: rimuove il token.
    */
   logout() {
-    localStorage.removeItem('token');
+    this.tokenSignal.set(null);
   }
 }
