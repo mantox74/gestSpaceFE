@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { form, FormField, required } from '@angular/forms/signals';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 type LoginFormType = {
   username: string;
@@ -12,7 +12,14 @@ type LoginFormType = {
 };
 @Component({
   selector: 'app-login.component',
-  imports: [CommonModule, InputTextModule, CardModule, PasswordModule, FormField, ButtonModule],
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    FormField,
+    MatCardModule,
+    MatInputModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

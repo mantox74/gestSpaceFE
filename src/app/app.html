@@ -2,22 +2,22 @@
 <div class="flex flex-col h-screen overflow-hidden">
     <header class="bg-primary text-primary-contrast h-16 flex items-center justify-between px-4 shadow-md z-10">
         <div class="flex items-center gap-3">
-            <p-button icon="pi pi-bars" [text]="true" [disabled]="!authService.isLoggedIn()" (onClick)="toggleMenu()"
-                styleClass="!text-primary-contrast hover:!bg-white/10">
-            </p-button>
+            <button mat-icon-button [disabled]="!authService.isLoggedIn()" (click)="toggleMenu()">
+                <mat-icon>menu</mat-icon>
+            </button>
 
             <span class="text-xl font-bold tracking-wide">GestSpace - Gestione spazi</span>
         </div>
 
         <div>
             @if(authService.isLoggedIn() && authService.currentUser()) {
-            <p-avatar
-                [label]="authService.currentUser()!.nome!.charAt(0) + authService.currentUser()?.cognome?.charAt(0)"
-                class="mr-2" shape="circle" />
+            <div class="mr-2">
+                {{authService.currentUser()!.nome!.charAt(0) + authService.currentUser()?.cognome?.charAt(0)}}
+            </div>
             } @else {
-            <p-button icon="pi pi-sign-in" [text]="true" label="Login"
-                styleClass="!text-primary-contrast hover:!bg-white/10" (onClick)="navigateToLogin()">
-            </p-button>
+            <button mat-icon-button (click)="navigateToLogin()">
+                <mat-icon>login</mat-icon>
+            </button>
             }
         </div>
     </header>
