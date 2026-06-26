@@ -1,10 +1,10 @@
+@use "tailwindcss";
 // Include theming for Angular Material with `mat.theme()`.
 // This Sass mixin will define CSS variables that are used for styling Angular Material
 // components according to the Material 3 design spec.
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
-@use "tailwindcss";
 
 
 html {
@@ -33,4 +33,5 @@ body {
     // Reset the user agent margin.
     margin: 0;
     height: 100%;
+
 }

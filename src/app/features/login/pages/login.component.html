@@ -1,29 +1,34 @@
-<mat-card header="Login" class="w-full max-w-md mx-auto mt-10">
-    <form class="p-fluid flex flex-col gap-4">
-        <div class="flex flex-col gap-2">
-            <mat-form-field>
-                <input id="username" matInput placeholder="Username" [formField]="loginForm.username" />
-                @if(loginForm.username().invalid() && (loginForm.username().touched() || loginForm.username().dirty())
+<section class="h-full flex items-baseline justify-center">
+    <mat-card class="w-100 p-8 m-16">
+        <form class="flex flex-col gap-4 justify-center">
+            <div>
+                <mat-form-field class="w-full">
+                    <input id="username" matInput placeholder="Username" [formField]="loginForm.username" />
+                </mat-form-field>
+                @if(loginForm.username().invalid() && (loginForm.username().touched() ||
+                loginForm.username().dirty())
                 &&
                 loginForm.username().getError('required')) {
-                <div class="text-red-500 text-sm">
+                <mat-error>
                     {{ loginForm.username().getError('required')?.message }}
-                </div>
+                </mat-error>
                 }
-            </mat-form-field>
-        </div>
-        <div class="flex flex-col gap-2">
-            <mat-form-field>
-                <input id="password" matInput type="password" placeholder="Password" [formField]="loginForm.password" />
+            </div>
+            <div>
+                <mat-form-field class="w-full">
+                    <input id="password" matInput type="password" placeholder="Password"
+                        [formField]="loginForm.password" />
+                </mat-form-field>
                 @if(loginForm.password().invalid() && (loginForm.password().touched() || loginForm.password().dirty())
                 &&
                 loginForm.password().getError('required')) {
-                <div class="text-red-500 text-sm">
+                <mat-error>
                     {{ loginForm.password().getError('required')?.message }}
-                </div>
+                </mat-error>
                 }
-            </mat-form-field>
-        </div>
-        <button mat-raised-button [disabled]="loginForm().invalid()" (click)="login()" class="mt-4">Login</button>
-    </form>
-</mat-card>
+            </div>
+            <button type="button" matButton="filled" class="self-center" [disabled]="loginForm().invalid()"
+                (click)="login()">Login</button>
+        </form>
+    </mat-card>
+</section>

@@ -1,8 +1,8 @@
 <app-spinner></app-spinner>
 <div class="flex flex-col h-screen overflow-hidden">
-    <header class="bg-primary text-primary-contrast h-16 flex items-center justify-between px-4 shadow-md z-10">
+    <header class="page-header h-16 flex items-center justify-between px-4 shadow-md z-10">
         <div class="flex items-center gap-3">
-            <button mat-icon-button [disabled]="!authService.isLoggedIn()" (click)="toggleMenu()">
+            <button mat-icon-button (click)="sidenav.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
 
@@ -15,17 +15,17 @@
                 {{authService.currentUser()!.nome!.charAt(0) + authService.currentUser()?.cognome?.charAt(0)}}
             </div>
             } @else {
-            <button mat-icon-button (click)="navigateToLogin()">
+            <button matButton (click)="navigateToLogin()">
                 <mat-icon>login</mat-icon>
+                Login
             </button>
             }
         </div>
     </header>
 
-    <div class="flex flex-1 overflow-hidden">
+    <mat-sidenav-container class="flex flex-1 overflow-hidden">
 
-        <aside class="bg-content border-r border-gray-300 transition-all duration-200 overflow-x-hidden overflow-y-auto"
-            [class]="isMenuOpen() ? 'w-40' : 'w-0'">
+        <mat-sidenav #sidenav class="shadow-md" mode="over" fixedInViewport="true" fixedTopGap="64">
 
             <div class="p-3">
 
@@ -37,11 +37,11 @@
                 </div>
 
             </div>
-        </aside>
+        </mat-sidenav>
 
-        <main class="flex-1 bg-surface-50 overflow-y-auto p-4">
+        <mat-sidenav-content class="flex-1 bg-surface-50 overflow-y-auto p-4">
             <router-outlet></router-outlet>
-        </main>
+        </mat-sidenav-content>
 
-    </div>
+    </mat-sidenav-container>
 </div>
