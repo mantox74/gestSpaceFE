@@ -4,12 +4,17 @@ import { authGuard } from '@app/core/auth/auth.guard'; // Assicurati che il perc
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('@features/home/home.routes').then((m) => m.homeRoutes),
-    canActivateChild: [authGuard], // <--- Applicato qui! Protegge tutti i figli di home
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
   {
     path: 'login',
     loadComponent: () =>
-      import('@app/features/login/pages/login.component').then((m) => m.LoginComponent), // Esempio di lazy loading per il login
+      import('@features/login/pages/login.component').then((m) => m.LoginComponent), // Esempio di lazy loading per il login
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('@features/home/pages/home.component').then((m) => m.HomeComponent), // Esempio di lazy loading per il dashboard
+    canActivate: [authGuard], // Protegge la rotta con l'AuthGuard
   },
 ];

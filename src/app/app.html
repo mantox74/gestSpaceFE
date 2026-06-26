@@ -25,18 +25,8 @@
 
     <mat-sidenav-container class="flex flex-1 overflow-hidden">
 
-        <mat-sidenav #sidenav class="shadow-md" mode="over" fixedInViewport="true" fixedTopGap="64">
-
-            <div class="p-3">
-
-                <div class="flex align-items-center gap-2 p-2 text-[var(--p-text-color)]">
-                    <a routerLink="/" pButton>
-                        <i class="pi pi-home" style="font-size: 1.25rem;"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </div>
-
-            </div>
+        <mat-sidenav #sidenav class="shadow-md" mode="side" fixedInViewport="true" fixedTopGap="64">
+            <app-sidebar></app-sidebar>
         </mat-sidenav>
 
         <mat-sidenav-content class="flex-1 bg-surface-50 overflow-y-auto p-4">
