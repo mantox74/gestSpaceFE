@@ -35,3 +35,34 @@ body {
     height: 100%;
 
 }
+
+
+/**
+ * Override Material component styles here. For example, you can change the default
+ */
+
+.mdc-snackbar {
+    --mat-snack-bar-button-color: #fff;
+
+    .mat-mdc-snack-bar-action {
+        background-color: rgba(255, 255, 255, 0.05);
+        --mat-button-text-state-layer-color: #fff;
+        --mat-button-text-ripple-color: rgba(255, 255, 255, 0.8);
+        --mat-button-text-hover-state-layer-opacity: 0.3;
+    }
+
+    &.success {
+        --mat-snack-bar-container-color: #2e7d32;
+        --mat-snack-bar-supporting-text-color: #fff;
+    }
+
+    &.error {
+        --mat-snack-bar-container-color: var(--mat-sys-error);
+        --mat-snack-bar-supporting-text-color: var(--mat-sys-on-error);
+    }
+
+    &.warning {
+        --mat-snack-bar-container-color: #e65100;
+        --mat-snack-bar-supporting-text-color: #fff;
+    }
+}

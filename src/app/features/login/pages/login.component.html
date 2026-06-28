@@ -3,14 +3,14 @@
         <form class="flex flex-col gap-4 justify-center">
             <div>
                 <mat-form-field class="w-full">
-                    <input id="username" matInput placeholder="Username" [formField]="loginForm.username" />
+                    <input id="email" matInput placeholder="Email" [formField]="loginForm.email" />
                 </mat-form-field>
-                @if(loginForm.username().invalid() && (loginForm.username().touched() ||
-                loginForm.username().dirty())
+                @if(loginForm.email().invalid() && (loginForm.email().touched() ||
+                loginForm.email().dirty())
                 &&
-                loginForm.username().getError('required')) {
+                loginForm.email().getError('required')) {
                 <mat-error>
-                    {{ loginForm.username().getError('required')?.message }}
+                    {{ loginForm.email().getError('required')?.message }}
                 </mat-error>
                 }
             </div>

@@ -1,17 +1,17 @@
-import { computed, effect, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { UserData, UserPayload } from '@app/core/auth/auth.model';
+import { environment as env } from '@environments/environment';
 import { jwtDecode } from 'jwt-decode';
-
-interface UserPayload {
-  nome: string;
-  cognome: string;
-  ruolo: 'ADMIN' | 'OPERATORE';
-  stato: string;
-}
+import { Observable, tap, throwError } from 'rxjs';
+import { catchError } from 'rxjs/internal/operators/catchError';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private http = inject(HttpClient);
+
   // Il signal principale gestisce il token (la fonte della verità)
   private tokenSignal = signal<string | null>(localStorage.getItem('token'));
 
@@ -48,11 +48,21 @@ export class AuthService {
   }
 
   /**
-   * Metodo per il login: salva il token .
-   * @param token jwt token
+   *
+   * @param email email
+   * @param password password
+   * @returns Observable<UserData | { error: string }>
    */
-  login(token: string) {
-    this.tokenSignal.set(token);
+  login(email: string, password: string): Observable<UserData | { error: string }> {
+    return this.http.post<UserData>(`${env.apiUrl}/auth/login`, { email, password }).pipe(
+      tap((response: UserData) => {
+        this.tokenSignal.set(response.token);
+      }),
+      catchError((error) => {
+        this.tokenSignal.set(null);
+        return throwError(() => error);
+      }),
+    );
   }
 
   /**

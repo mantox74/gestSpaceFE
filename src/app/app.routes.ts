@@ -17,4 +17,6 @@ export const routes: Routes = [
     loadComponent: () => import('@features/home/pages/home.component').then((m) => m.HomeComponent), // Esempio di lazy loading per il dashboard
     canActivate: [authGuard], // Protegge la rotta con l'AuthGuard
   },
+
+  // TODO 404
 ];
