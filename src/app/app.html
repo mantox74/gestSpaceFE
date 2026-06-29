@@ -9,19 +9,7 @@
             <span class="text-xl font-bold tracking-wide">GestSpace - Gestione spazi</span>
         </div>
 
-        <div>
-            @if(authService.isLoggedIn() && authService.currentUser()) {
-            <div class="mr-2">
-                <!-- {{authService.currentUser()|json}} -->
-                {{authService.currentUser()!.nome!.charAt(0) + authService.currentUser()?.cognome?.charAt(0)}}
-            </div>
-            } @else {
-            <button matButton (click)="navigateToLogin()">
-                <mat-icon>login</mat-icon>
-                Login
-            </button>
-            }
-        </div>
+        <app-user-menu></app-user-menu>
     </header>
 
     <mat-sidenav-container class="flex flex-1 overflow-hidden">

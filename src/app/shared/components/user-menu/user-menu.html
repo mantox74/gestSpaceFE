@@ -1,0 +1,19 @@
+@if(authService.isLoggedIn() && authService.currentUser()) {
+<div class="mr-2">
+    <!-- {{authService.currentUser()|json}} -->
+    <button matButton="filled" [matMenuTriggerFor]="userMenu" class="user-menu-button">
+        {{authService.currentUser()!.nome!.charAt(0) + authService.currentUser()?.cognome?.charAt(0)}}
+    </button>
+    <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Logout
+        </button>
+    </mat-menu>
+</div>
+} @else {
+<button matButton="text" (click)="navigateToLogin()">
+    <mat-icon>login</mat-icon>
+    Login
+</button>
+}

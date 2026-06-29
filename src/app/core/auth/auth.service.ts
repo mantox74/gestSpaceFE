@@ -21,12 +21,6 @@ export class AuthService {
     if (!token) return null;
     try {
       return jwtDecode<UserPayload>(token);
-      // return {
-      //   nome: 'Massimiliano',
-      //   cognome: 'Mantovani',
-      //   ruolo: 'OPERATORE',
-      //   stato: 'ATTIVO',
-      // };
     } catch (e) {
       console.error('Token non valido', e);
       return null;

@@ -5,20 +5,20 @@ mat-list {
 
         padding: 0;
 
-        &:hover,
-        &.activePath {
-            background-color: color-mix(in srgb, var(--mat-sys-primary-container) 50%, transparent);
-            color: var(--mat-sys-on-primary-container);
-        }
+        border-bottom: 1px solid var(--mat-sys-primary-fixed);
 
         a {
-            border-bottom: 1px solid var(--mat-sys-outline);
+
             padding: 0.5rem 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
 
-
+            &:hover,
+            &.activePath {
+                background-color: color-mix(in srgb, var(--mat-sys-primary-container) 50%, transparent);
+                color: var(--mat-sys-on-primary-container);
+            }
         }
     }
 }

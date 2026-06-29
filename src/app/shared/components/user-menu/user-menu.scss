@@ -1,0 +1,8 @@
+.user-menu-button {
+    min-width: unset;
+    border-radius: 100%;
+    padding: 0.5rem;
+    --mat-button-filled-container-color: white;
+    --mat-button-filled-label-text-color: var(--mat-sys-on-primary-container);
+    --mat-button-filled-state-layer-color: var(--mat-sys-primary);
+}

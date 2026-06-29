@@ -1,32 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { Router, RouterOutlet } from '@angular/router';
-import { AuthService } from '@core/auth/auth.service';
+import { RouterOutlet } from '@angular/router';
 import { Sidebar } from '@shared/components/sidebar/sidebar';
 import { SpinnerComponent } from '@shared/components/spinner/spinner.component';
+import { UserMenu } from './shared/components/user-menu/user-menu';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    MatButtonModule,
     CommonModule,
     SpinnerComponent,
     MatIconModule,
     MatSidenavModule,
     Sidebar,
+    UserMenu,
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.scss'],
 })
-export class App {
-  readonly authService: AuthService = inject(AuthService);
-  private router = inject(Router);
-
-  navigateToLogin() {
-    this.router.navigate(['/login']);
-  }
-}
+export class App {}

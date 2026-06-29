@@ -1,8 +1,47 @@
 <mat-list>
+    @if(auth.isLoggedIn()) {
     <mat-list-item>
         <a routerLink="/" href="" routerLinkActive="activePath">
             <mat-icon>home</mat-icon>
             <span>Home</span>
         </a>
     </mat-list-item>
+    <mat-list-item>
+        <a routerLink="/clienti" href="" routerLinkActive="activePath">
+            <mat-icon>person_pin_circle</mat-icon>
+            <span>Clienti</span>
+        </a>
+    </mat-list-item>
+    <mat-list-item>
+        <a routerLink="/fatture" href="" routerLinkActive="activePath">
+            <mat-icon>receipt_long</mat-icon>
+            <span>Fatture</span>
+        </a>
+    </mat-list-item>
+    <mat-list-item>
+        <a routerLink="/prenotazioni" href="" routerLinkActive="activePath">
+            <mat-icon>event</mat-icon>
+            <span>Prenotazioni</span>
+        </a>
+    </mat-list-item>
+    <mat-list-item>
+        <a routerLink="/preventivi" href="" routerLinkActive="activePath">
+            <mat-icon>description</mat-icon>
+            <span>Preventivi</span>
+        </a>
+    </mat-list-item>
+    <mat-list-item>
+        <a routerLink="/spazi" href="" routerLinkActive="activePath">
+            <mat-icon>inventory_2</mat-icon>
+            <span>Spazi</span>
+        </a>
+    </mat-list-item>
+    } @else {
+    <mat-list-item>
+        <a routerLink="/login" href="" routerLinkActive="activePath">
+            <mat-icon>login</mat-icon>
+            <span>Login</span>
+        </a>
+    </mat-list-item>
+    }
 </mat-list>
