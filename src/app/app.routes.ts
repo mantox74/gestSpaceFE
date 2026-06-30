@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from '@app/core/auth/auth.guard'; // Assicurati che il percorso sia corretto
+import { authGuard } from '@app/core/auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -14,15 +14,17 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadComponent: () => import('@features/home/pages/home.component').then((m) => m.HomeComponent),
-    canActivate: [authGuard], // Protegge la rotta con l'AuthGuard
+    loadComponent: () =>
+      import('@features/home/pages/home/home.component').then((m) => m.HomeComponent),
+    canActivate: [authGuard],
   },
   {
     path: 'preventivi',
     loadChildren: () =>
       import('@features/preventivi/preventivi.routes').then((m) => m.preventiviRoutes),
-    canActivate: [authGuard], // Protegge la rotta con l'AuthGuard
-  }
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
+  },
   {
     path: '**',
     loadComponent: () => import('@features/not-found/not-found').then((m) => m.NotFoundComponent), // lazy loading per la pagina 404

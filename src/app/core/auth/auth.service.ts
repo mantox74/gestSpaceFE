@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { UserData, UserPayload } from '@app/core/auth/auth.model';
-import { environment as env } from '@environments/environment';
+import { environment as env } from '@env/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Observable, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/internal/operators/catchError';
