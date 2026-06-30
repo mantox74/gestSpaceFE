@@ -10,15 +10,19 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('@features/login/pages/login.component').then((m) => m.LoginComponent),
+      import('@app/features/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'home',
     loadComponent: () => import('@features/home/pages/home.component').then((m) => m.HomeComponent),
     canActivate: [authGuard], // Protegge la rotta con l'AuthGuard
   },
-
-  // TODO 404
+  {
+    path: 'preventivi',
+    loadChildren: () =>
+      import('@features/preventivi/preventivi.routes').then((m) => m.preventiviRoutes),
+    canActivate: [authGuard], // Protegge la rotta con l'AuthGuard
+  }
   {
     path: '**',
     loadComponent: () => import('@features/not-found/not-found').then((m) => m.NotFoundComponent), // lazy loading per la pagina 404
