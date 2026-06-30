@@ -1,0 +1,160 @@
+.not-found-page {
+    .scene {
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+        overflow: visible;
+    }
+
+    .floor-shadow {
+        fill: var(--mat-sys-outline-variant);
+        opacity: 0.5;
+    }
+
+    .unit-back {
+        fill: var(--mat-sys-surface-container-low);
+    }
+
+    .unit-floor {
+        fill: var(--mat-sys-surface-container-high);
+    }
+
+    .unit-frame {
+        fill: none;
+        stroke: var(--mat-sys-outline);
+        stroke-width: 2;
+    }
+
+    .door-left,
+    .door-right {
+        fill: var(--mat-sys-outline);
+        opacity: 0.4;
+    }
+
+    .slat {
+        stroke: var(--mat-sys-outline-variant);
+        stroke-width: 1;
+    }
+
+    .tag-string {
+        stroke: var(--mat-sys-outline);
+        stroke-width: 1;
+    }
+
+    .tag {
+        fill: var(--mat-sys-tertiary-container);
+        stroke: var(--mat-sys-outline);
+        stroke-width: 1;
+        transform-box: fill-box;
+        transform-origin: top center;
+        animation: tag-swing 3s ease-in-out infinite;
+    }
+
+    .tag-text {
+        font-size: 9px;
+        font-weight: 700;
+        fill: var(--mat-sys-on-tertiary-container);
+        font-family: inherit;
+        transform-box: fill-box;
+        transform-origin: top center;
+        animation: tag-swing 3s ease-in-out infinite;
+    }
+
+    .box-character {
+        transform-box: fill-box;
+        transform-origin: bottom center;
+        animation: bounce 2.4s ease-in-out infinite;
+    }
+
+    .box-body {
+        fill: var(--mat-sys-primary-container);
+        stroke: var(--mat-sys-outline);
+        stroke-width: 1.5;
+    }
+
+    .box-tape-v,
+    .box-tape-h {
+        stroke: var(--mat-sys-outline);
+        stroke-width: 1.5;
+    }
+
+    .eye {
+        fill: var(--mat-sys-on-primary-container);
+    }
+
+    .mouth {
+        fill: none;
+        stroke: var(--mat-sys-on-primary-container);
+        stroke-width: 1.6;
+        stroke-linecap: round;
+    }
+
+    .dust circle {
+        fill: var(--mat-sys-outline-variant);
+        animation: drift 4s ease-in-out infinite;
+    }
+
+    .dust circle:nth-child(2) {
+        animation-delay: 0.6s;
+    }
+
+    .dust circle:nth-child(3) {
+        animation-delay: 1.2s;
+    }
+
+    .dust circle:nth-child(4) {
+        animation-delay: 1.8s;
+    }
+
+    .code {
+        color: var(--mat-sys-primary);
+    }
+
+    @keyframes tag-swing {
+
+        0%,
+        100% {
+            transform: rotate(-4deg);
+        }
+
+        50% {
+            transform: rotate(4deg);
+        }
+    }
+
+    @keyframes bounce {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-6px);
+        }
+    }
+
+    @keyframes drift {
+
+        0%,
+        100% {
+            transform: translateY(0);
+            opacity: 0.6;
+        }
+
+        50% {
+            transform: translateY(-8px);
+            opacity: 0.2;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .tag,
+        .tag-text,
+        .box-character,
+        .dust circle {
+            animation: none;
+        }
+    }
+}

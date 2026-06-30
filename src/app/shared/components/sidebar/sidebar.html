@@ -1,7 +1,14 @@
 <mat-list>
     @if(auth.isLoggedIn()) {
     <mat-list-item>
-        <a routerLink="/" href="" routerLinkActive="activePath">
+        <a routerLink="/gestioneUtenti" href="" routerLinkActive="activePath">
+            <mat-icon>account_circle</mat-icon>
+            <span>Gestione Utenti</span>
+        </a>
+    </mat-list-item>
+
+    <mat-list-item>
+        <a routerLink="/" href="" routerLinkActive="activePath" [routerLinkActiveOptions]="{ exact: true }">
             <mat-icon>home</mat-icon>
             <span>Home</span>
         </a>

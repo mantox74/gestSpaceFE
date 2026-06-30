@@ -10,13 +10,17 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('@features/login/pages/login.component').then((m) => m.LoginComponent), // Esempio di lazy loading per il login
+      import('@features/login/pages/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'home',
-    loadComponent: () => import('@features/home/pages/home.component').then((m) => m.HomeComponent), // Esempio di lazy loading per il dashboard
+    loadComponent: () => import('@features/home/pages/home.component').then((m) => m.HomeComponent),
     canActivate: [authGuard], // Protegge la rotta con l'AuthGuard
   },
 
   // TODO 404
+  {
+    path: '**',
+    loadComponent: () => import('@features/not-found/not-found').then((m) => m.NotFoundComponent), // lazy loading per la pagina 404
+  },
 ];
