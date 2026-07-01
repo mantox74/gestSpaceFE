@@ -1,25 +1,43 @@
 export interface PreventivoDTO {
-  id: number;
+  cliente: PreventivoCliente;
   cliente_id: number;
-  spazio_id: number;
-  data_inizio: string;
-  data_fine: string;
-  importo_totale: number;
-  stato: string;
-  note: string;
   created_at: string;
-  sconto_manuale_tipo: string | null;
-  sconto_manuale_valore: number | null;
-  sconto_manuale_note: string | null;
+  data_fine: string;
+  data_inizio: string;
+  data_invio: string | null;
   dettaglio_calcolo: {
     giorni: number;
     importo: number;
   };
-  data_invio: string | null;
-  cliente_nome: string | null;
-  cliente_cognome: string | null;
-  cliente_email: string | null;
-  cliente_telefono: string | null;
-  spazio_nome: string | null;
-  prezzo_giorno: number | null;
+  id: number;
+  importo_totale: number;
+  note: string;
+  sconto_manuale_note: string | null;
+  sconto_manuale_tipo: string | null;
+  sconto_manuale_valore: number | null;
+  spazio: PreventivoSpazio;
+  spazio_id: number;
+  stato: string;
+}
+
+interface PreventivoCliente {
+  id: number;
+  nome: string;
+  cognome: string;
+  email: string;
+  telefono: string;
+  indirizzo: string;
+  citta: string;
+  cap: string | null;
+  p_iva: string | null;
+  codice_fiscale: string;
+}
+
+interface PreventivoSpazio {
+  id: number;
+  nome: string;
+  prezzo_giorno: number;
+  lunghezza: string | null;
+  larghezza: string | null;
+  altezza: string | null;
 }

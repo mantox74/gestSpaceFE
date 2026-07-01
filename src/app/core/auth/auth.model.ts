@@ -1,11 +1,12 @@
 export interface UserPayload {
+  id: number;
+  email: string;
   nome: string;
   cognome: string;
   ruolo: 'ADMIN' | 'OPERATORE';
-  stato: string;
 }
 
-export interface UserData extends UserPayload {
-  id: number;
+export interface UserData {
   token: string;
+  utente: UserPayload;
 }

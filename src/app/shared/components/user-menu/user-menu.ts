@@ -3,12 +3,12 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@app/core/auth/auth.service';
 
 @Component({
   selector: 'app-user-menu',
-  imports: [CommonModule, MatMenuModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, MatMenuModule, MatButtonModule, MatIconModule, RouterModule],
   templateUrl: './user-menu.html',
   styleUrl: './user-menu.scss',
 })
@@ -20,8 +20,8 @@ export class UserMenu {
     this.router.navigate(['/login']);
   }
 
-  logout() {
-    this.authService.logout();
+  async logout() {
+    await this.authService.logout();
     this.router.navigate(['/login']);
   }
 }

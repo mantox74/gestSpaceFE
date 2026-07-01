@@ -28,7 +28,9 @@ body {
     // variables at https://material.angular.dev/guide/system-variables
     background-color: var(--mat-sys-surface);
     color: var(--mat-sys-on-surface);
-    font: var(--mat-sys-body-medium);
+    // font: var(--mat-sys-body-medium);
+    font: var(--mat-sys-body-large);
+    letter-spacing: var(--mat-sys-body-large-tracking);
 
     // Reset the user agent margin.
     margin: 0;
@@ -36,6 +38,39 @@ body {
 
 }
 
+h1 {
+
+    font: var(--mat-sys-headline-large);
+    line-height: var(--mat-sys-headline-large-line-height);
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font: var(--mat-sys-headline-small);
+    line-height: var(--mat-sys-headline-small-line-height);
+    margin-block: 1rem;
+}
+
+h3 {
+    font: var(--mat-sys-title-large);
+    line-height: var(--mat-sys-title-large-line-height);
+    margin-block: 0.75rem;
+}
+
+h4 {
+    font: var(--mat-sys-title-medium);
+    line-height: var(--mat-sys-title-medium-line-height);
+    margin-block: 0.5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--mat-sys-primary);
+}
 
 /**
  * Override Material component styles here. For example, you can change the default

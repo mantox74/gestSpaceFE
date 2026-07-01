@@ -1,5 +1,6 @@
 <section class="h-full flex items-baseline justify-center">
     <mat-card class="w-100 p-8 m-16">
+        <h1>Login</h1>
         <form class="flex flex-col gap-4 justify-center">
             <div>
                 <mat-form-field class="w-full">
@@ -27,8 +28,8 @@
                 </mat-error>
                 }
             </div>
-            <button type="button" matButton="filled" class="self-center" [disabled]="loginForm().invalid()"
-                (click)="login()">Login</button>
+            <button type="button" matButton="filled" class="self-center"
+                [disabled]="loginForm().invalid() || isLoading()" (click)="login()">Login</button>
         </form>
     </mat-card>
 </section>

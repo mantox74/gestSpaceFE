@@ -26,6 +26,12 @@ export const routes: Routes = [
     canActivateChild: [authGuard],
   },
   {
+    path: 'account-manage',
+    loadComponent: () =>
+      import('@features/account/pages/account-manage/account-manage').then((m) => m.AccountManage),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     loadComponent: () => import('@features/not-found/not-found').then((m) => m.NotFoundComponent), // lazy loading per la pagina 404
   },

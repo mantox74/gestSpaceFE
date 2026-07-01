@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   /**
-   *
+   * fa il login dell'utente, memorizza il token e restituisce i dati dell'utente
    * @param email email
    * @param password password
    * @returns Observable<UserData | { error: string }>
@@ -50,7 +50,11 @@ export class AuthService {
   login(email: string, password: string): Observable<UserData | { error: string }> {
     return this.http.post<UserData>(`${env.apiUrl}/auth/login`, { email, password }).pipe(
       tap((response: UserData) => {
-        this.tokenSignal.set(response.token);
+        if("error" in response) {
+          this.tokenSignal.set(null);
+        } else {
+          this.tokenSignal.set(response.token);
+        }
       }),
       catchError((error) => {
         this.tokenSignal.set(null);

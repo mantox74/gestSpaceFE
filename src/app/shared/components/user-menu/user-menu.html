@@ -9,11 +9,12 @@
             <mat-icon>logout</mat-icon>
             Logout
         </button>
+
+        <button mat-menu-item [routerLink]="['/account-manage']">
+            <mat-icon>manage_accounts</mat-icon>
+            Gestione account
+        </button>
+
     </mat-menu>
 </div>
-} @else {
-<button matButton="text" (click)="navigateToLogin()">
-    <mat-icon>login</mat-icon>
-    Login
-</button>
 }

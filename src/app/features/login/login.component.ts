@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { form, FormField, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -32,7 +33,9 @@ type LoginFormType = {
 export class LoginComponent {
   private authService = inject(AuthService);
   private router: Router = inject(Router);
+  private destroyRef = inject(DestroyRef);
   private snackBar: SnackBarService = inject(SnackBarService);
+  isLoading = signal(false);
 
   loginForm = form(
     signal<LoginFormType>({
@@ -47,16 +50,27 @@ export class LoginComponent {
 
   login(): void {
     if (this.loginForm().valid()) {
+      this.isLoading.set(true);
       const { email, password } = this.loginForm().value();
-      this.authService.login(email, password).subscribe({
-        next: (response: UserData | { error: string }) => {
-          this.router.navigate(['/']);
-        },
-        error: (error) => {
-          console.error('Errore durante il login:', error);
-          this.snackBar.showError('Errore durante il login');
-        },
-      });
+      this.authService
+        .login(email, password)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (response: UserData | { error: string }) => {
+            if ('error' in response) {
+              this.snackBar.showError(response.error);
+              return;
+            }
+            this.router.navigate(['/']);
+          },
+          error: (error) => {
+            // console.error('Errore durante il login:', error);
+            this.snackBar.showError("Errore durante il login, contattare l'amministratore");
+          },
+          complete: () => {
+            this.isLoading.set(false);
+          },
+        });
     }
   }
 }
