@@ -5,7 +5,7 @@
 
     <div class="flex justify-center mt-8">
         <mat-card class="account-settings px-8 w-[90%]">
-            <form class="my-8 grid grid-cols-3 gap-4 w-full" (submit)="salva()">
+            <form class="my-8 grid grid-cols-3 gap-4 w-full">
                 <mat-form-field>
                     <mat-label for="nome">Nome:</mat-label>
                     <input matInput [formField]="formAccount.nome" type="text" placeholder="Inserisci il tuo nome">
@@ -77,9 +77,11 @@
                 </div>
 
                 <div class="actions__wrapper mt-4 col-span-full flex justify-center gap-4">
-                    <button matButton="filled" [disabled]="formAccount().invalid()">Salva modifiche</button>
+                    <button matButton="filled" type="button"
+                        [disabled]="formAccount().invalid() || !formAccount().touched()" (click)="salva()">Salva
+                        modifiche</button>
                     <button matButton="outlined" type="button" [disabled]="!formAccount().touched()"
-                        (click)="resetForm()">Resetta modifiche</button>
+                        (click)="setInitData()">Resetta modifiche</button>
                 </div>
             </form>
         </mat-card>

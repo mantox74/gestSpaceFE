@@ -6,8 +6,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 import { UserPayload } from '@app/core/auth/auth.model';
 import { AuthService } from '@app/core/auth/auth.service';
+import { SnackBarService } from '@app/core/services/snack-bar-service';
+import { environment as env } from '@env/environment';
 
 type AccountFormType = Omit<UserPayload, 'ruolo'> & {
   ruolo: string;
@@ -31,14 +34,11 @@ type AccountFormType = Omit<UserPayload, 'ruolo'> & {
 })
 export class AccountManage {
   private http = inject(HttpClient);
+  private router = inject(Router);
+  private snackBar = inject(SnackBarService);
   auth = inject(AuthService);
 
-  formAccountModel = signal<AccountFormType>({
-    ...(this.auth.currentUser() as UserPayload),
-    vecchiaPassword: '',
-    nuovaPassword: '',
-    confermaNuovaPassword: '',
-  });
+  formAccountModel = signal<AccountFormType>(undefined as unknown as AccountFormType);
 
   formAccount = form(this.formAccountModel, (schemaPath) => {
     readonly(schemaPath.ruolo);
@@ -63,19 +63,48 @@ export class AccountManage {
     });
   });
 
+  constructor() {
+    this.setInitData();
+  }
+
   /**
-   * Resets the form to the current user data, clearing password fields.
+   * Inizializza o resetta i dati del form con i dati dell'utente corrente
    */
-  resetForm(): void {
-    this.formAccountModel.set({
-      ...(this.auth.currentUser() as UserPayload),
-      vecchiaPassword: '',
-      nuovaPassword: '',
-      confermaNuovaPassword: '',
-    });
+  setInitData(): void {
+    const currentUser = this.auth.currentUser();
+    if (currentUser) {
+      this.formAccountModel.set({
+        ...currentUser,
+        vecchiaPassword: '',
+        nuovaPassword: '',
+        confermaNuovaPassword: '',
+      });
+    }
   }
 
   salva(): void {
-    console.log('Salvataggio dati account:', this.formAccount().value());
+    this.http
+      .patch<{
+        message?: string;
+        error?: string;
+      }>(`${env.apiUrl}/account/modifica-account-utente`, this.formAccountModel())
+      .subscribe({
+        next: (response: { message?: string; error?: string }) => {
+          if (response?.error) {
+            this.snackBar.showError(response.error);
+            return;
+          }
+          this.snackBar.showSuccess(response?.message || 'Account modificato con successo');
+          // Faccio il logout perchè l'utente deve ricaricare il token con i nuovi dati!
+          this.auth.logout();
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          console.error("Errore durante la modifica dell'account", error);
+          this.snackBar.showError(
+            "Errore durante la modifica dell'account, contattare un amministratore.",
+          );
+        },
+      });
   }
 }
