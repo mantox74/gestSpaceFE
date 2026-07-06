@@ -1,1 +1,17 @@
-<p>home.component works!</p>
+<!-- <pre>
+    Spazi Totali: {{ spazi.value()?.totale }}
+    Spazi Occupati: {{ spazi.value()?.occupati }}
+    Spazi Liberi: {{ spazi.value()?.liberi }}
+    Percentuale Occupazione: {{ spazi.value()?.percentuale_occupazione }}%
+</pre> -->
+
+<section class="dashboard__wrapper">
+    <h1>Dashboard</h1>
+    <div class="dashboard__chart grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="dashboard__chart-item">
+            <!-- <h2 class="dashboard__title">Stato occupazione spazi (totale: {{ spazi.value()?.totale }})</h2>
+            <h3>Aggiornato ad oggi</h3> -->
+            <div echarts [loading]="spazi.isLoading()" [options]="spaziChartOptions()"></div>
+        </div>
+    </div>
+</section>

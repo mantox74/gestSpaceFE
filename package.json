@@ -20,7 +20,10 @@
     "@angular/platform-browser": "^22.0.2",
     "@angular/router": "^22.0.2",
     "@tailwindcss/postcss": "^4.3.1",
+    "chart.js": "^4.5.1",
+    "echarts": "^6.1.0",
     "jwt-decode": "^4.0.0",
+    "ngx-echarts": "^22.0.0",
     "postcss": "^8.5.15",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.3.1",
@@ -35,5 +38,8 @@
     "prettier": "^3.8.1",
     "typescript": "~6.0.3",
     "vitest": "^4.0.8"
+  },
+  "allowScripts": {
+    "ng2-charts@10.0.0": true
   }
 }

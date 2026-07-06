@@ -1,14 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Service, signal } from '@angular/core';
 import { UserData, UserPayload } from '@app/core/auth/auth.model';
 import { environment as env } from '@env/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Observable, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/internal/operators/catchError';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class AuthService {
   private http = inject(HttpClient);
 
