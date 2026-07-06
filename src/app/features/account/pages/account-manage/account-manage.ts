@@ -100,9 +100,10 @@ export class AccountManage {
           this.router.navigate(['/login']);
         },
         error: (error) => {
-          console.error("Errore durante la modifica dell'account", error);
           this.snackBar.showError(
-            "Errore durante la modifica dell'account, contattare un amministratore.",
+            error.error.error ||
+              error.message ||
+              "Errore durante la modifica dell'account, contattare un amministratore.",
           );
         },
       });

@@ -50,11 +50,7 @@ export class AuthService {
   login(email: string, password: string): Observable<UserData | { error: string }> {
     return this.http.post<UserData>(`${env.apiUrl}/auth/login`, { email, password }).pipe(
       tap((response: UserData) => {
-        if("error" in response) {
-          this.tokenSignal.set(null);
-        } else {
-          this.tokenSignal.set(response.token);
-        }
+        this.tokenSignal.set(response.token);
       }),
       catchError((error) => {
         this.tokenSignal.set(null);

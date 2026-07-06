@@ -5,6 +5,7 @@ import {
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
+import { MAT_CARD_CONFIG } from '@angular/material/card';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatIconRegistry } from '@angular/material/icon';
 import { provideRouter } from '@angular/router';
@@ -23,6 +24,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
+    },
+    {
+      provide: MAT_CARD_CONFIG,
+      useValue: { appearance: 'filled' }, // <-- Forza l'aspetto predefinito a filled
     },
   ],
 };

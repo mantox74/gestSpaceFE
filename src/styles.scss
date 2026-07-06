@@ -101,3 +101,7 @@ h6 {
         --mat-snack-bar-supporting-text-color: #fff;
     }
 }
+
+@include mat.card-overrides((filled-container-color: #fff, // colore di sfondo per card filled
+        filled-container-elevation: var(--mat-sys-level2), // elevazione per card filled
+    ));

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { UserData } from '@app/core/auth/auth.model';
 import { AuthService } from '@app/core/auth/auth.service';
 import { SnackBarService } from '@app/core/services/snack-bar-service';
+import { finalize } from 'rxjs/internal/operators/finalize';
 
 type LoginFormType = {
   email: string;
@@ -54,21 +55,20 @@ export class LoginComponent {
       const { email, password } = this.loginForm().value();
       this.authService
         .login(email, password)
-        .pipe(takeUntilDestroyed(this.destroyRef))
+        .pipe(
+          takeUntilDestroyed(this.destroyRef),
+          finalize(() => this.isLoading.set(false)),
+        )
         .subscribe({
           next: (response: UserData | { error: string }) => {
-            if ('error' in response) {
-              this.snackBar.showError(response.error);
-              return;
-            }
             this.router.navigate(['/']);
           },
           error: (error) => {
-            // console.error('Errore durante il login:', error);
-            this.snackBar.showError("Errore durante il login, contattare l'amministratore");
-          },
-          complete: () => {
-            this.isLoading.set(false);
+            this.snackBar.showError(
+              error.error.error ||
+                error.message ||
+                "Errore durante il login. Contattare l'amministratore",
+            );
           },
         });
     }
