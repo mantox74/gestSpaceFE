@@ -9,9 +9,10 @@
     <h1>Dashboard</h1>
     <div class="dashboard__chart grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="dashboard__chart-item">
-            <!-- <h2 class="dashboard__title">Stato occupazione spazi (totale: {{ spazi.value()?.totale }})</h2>
-            <h3>Aggiornato ad oggi</h3> -->
             <div echarts [loading]="spazi.isLoading()" [options]="spaziChartOptions()"></div>
+        </div>
+        <div class="dashboard__chart-item">
+            <div echarts [loading]="preventivi.isLoading()" [options]="preventiviChartOptions()"></div>
         </div>
     </div>
 </section>

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpErrorResponse, httpResource } from '@angular/common/http';
 import { Component, computed, effect, inject } from '@angular/core';
 import { SnackBarService } from '@app/core/services/snack-bar-service';
-import { HomeSpazio } from '@app/features/home/model/home.model';
+import { HomePreventivo, HomeSpazio } from '@app/features/home/model/home.model';
 import * as env from '@env/environment';
 import { PieChart } from 'echarts/charts';
 import {
@@ -33,6 +33,53 @@ echarts.use([
 })
 export class HomeComponent {
   private snackBar = inject(SnackBarService);
+  preventivi = httpResource<HomePreventivo>(
+    () => `${env.environment.apiUrl}/dashboard/preventivi-stato`,
+  );
+  preventiviChartOptions = computed<EChartsOption>(() => ({
+    title: {
+      text: 'Stato preventivi (totale: ' + (this.preventivi.value()?.totale || 0) + ')',
+      subtext: 'Aggiornato oggi',
+      left: 'center',
+    },
+    color: ['#785DB0', '#FF994D', '#4CAF50', '#F44336', '#9E9E9E'],
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a}<br/>{b}: {c} ({d}%)', // {a}=series, {b}=name, {c}=value, {d}=percent
+    },
+    series: [
+      {
+        name: 'Preventivi',
+        type: 'pie',
+        radius: [30, 110],
+        label: {
+          show: true,
+          formatter: '{b} ({c})', // {a}=series, {b}=name, {c}=value, {d}=percent
+          fontSize: 12,
+          overflow: 'break', // 'truncate' | 'break' | 'breakAll'
+        },
+        emphasis: {
+          scale: true, // espande la fetta al hover
+          scaleSize: 20, // pixel di espansione
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)',
+          },
+          label: {
+            show: true,
+          },
+        },
+        data: [
+          { value: this.preventivi.value()?.bozza || 0, name: 'Bozza' },
+          { value: this.preventivi.value()?.inviati || 0, name: 'Inviati' },
+          { value: this.preventivi.value()?.accettati || 0, name: 'Accettati' },
+          { value: this.preventivi.value()?.rifiutati || 0, name: 'Rifiutati' },
+          { value: this.preventivi.value()?.annullati || 0, name: 'Annullati' },
+        ],
+      },
+    ],
+  }));
   spazi = httpResource<HomeSpazio>(() => `${env.environment.apiUrl}/dashboard/spazi`);
   spaziChartOptions = computed<EChartsOption>(() => ({
     title: {
