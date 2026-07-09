@@ -5,6 +5,9 @@
         {{authService.currentUser()!.nome!.charAt(0) + authService.currentUser()?.cognome?.charAt(0)}}
     </button>
     <mat-menu #userMenu="matMenu">
+        <small mat-menu-item>
+            Utente: {{authService.currentUser()?.nome}} {{authService.currentUser()?.cognome}}<br>
+            Ruolo: {{authService.currentUser()?.ruolo}}</small>
         <button mat-menu-item (click)="logout()">
             <mat-icon>logout</mat-icon>
             Logout
