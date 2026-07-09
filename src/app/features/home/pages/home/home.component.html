@@ -14,5 +14,11 @@
         <div class="dashboard__chart-item">
             <div echarts [loading]="preventivi.isLoading()" [options]="preventiviChartOptions()"></div>
         </div>
+        <div class="dashboard__chart-item">
+            <div echarts [loading]="fattureStato.isLoading()" [options]="fattureStatoChartOptions()"></div>
+        </div>
+        <div class="dashboard__chart-item">
+            <div echarts [loading]="fatturato.isLoading()" [options]="fatturatoChartOptions()"></div>
+        </div>
     </div>
 </section>
