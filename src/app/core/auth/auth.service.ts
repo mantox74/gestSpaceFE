@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, effect, inject, Service, signal } from '@angular/core';
+import { computed, effect, inject, linkedSignal, Service, signal } from '@angular/core';
 import { UserData, UserPayload } from '@app/core/auth/auth.model';
 import { environment as env } from '@env/environment';
 import { jwtDecode } from 'jwt-decode';
@@ -24,6 +24,9 @@ export class AuthService {
       return null;
     }
   });
+
+  // Signal derivato che indica se l'utente è un ADMIN
+  isAdmin = linkedSignal(() => this.currentUser()?.ruolo === 'ADMIN');
 
   constructor() {
     effect(() => {

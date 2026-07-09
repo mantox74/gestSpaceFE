@@ -1,5 +1,5 @@
 @if(authService.isLoggedIn() && authService.currentUser()) {
-<div class="mr-2">
+<div class="mr-4">
     <!-- {{authService.currentUser()|json}} -->
     <button matButton="filled" [matMenuTriggerFor]="userMenu" class="user-menu-button">
         {{authService.currentUser()!.nome!.charAt(0) + authService.currentUser()?.cognome?.charAt(0)}}
