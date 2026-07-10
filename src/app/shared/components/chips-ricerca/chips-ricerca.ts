@@ -2,12 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-
-export interface SearchChipItem {
-  chiave: string;
-  label: string;
-  valore: string | number;
-}
+import { SearchChipItem } from '@app/shared/model/table.model';
 
 @Component({
   selector: 'app-chips-ricerca',
