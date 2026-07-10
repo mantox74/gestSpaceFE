@@ -1,0 +1,10 @@
+<mat-chip-set aria-label="Filtri attivi">
+    @for (chip of chips(); track chip.chiave) {
+    <mat-chip-row (removed)="removed.emit(chip.chiave)">
+        {{ chip.label }}: <strong>{{ chip.valore }}</strong>
+        <button matChipRemove [attr.aria-label]="'Rimuovi ' + chip.label">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-chip-row>
+    }
+</mat-chip-set>
