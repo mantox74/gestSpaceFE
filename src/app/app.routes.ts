@@ -26,6 +26,12 @@ export const routes: Routes = [
     canActivateChild: [authGuard],
   },
   {
+    path: 'spazi',
+    loadChildren: () => import('@features/spazi/spazi.routes').then((m) => m.spaziRoutes),
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
+  },
+  {
     path: 'account-manage',
     loadComponent: () =>
       import('@features/account/pages/account-manage/account-manage').then((m) => m.AccountManage),

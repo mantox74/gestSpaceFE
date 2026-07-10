@@ -1,0 +1,82 @@
+<section class="spazi-list__wrapper">
+    <h1>Lista spazi</h1>
+
+    <div class="function-menu__wrapper flex justify-end mb-4 mt-4">
+        <button matButton="filled">
+            <mat-icon>add</mat-icon>
+            Aggiungi spazio
+        </button>
+    </div>
+    @if( !!spaziData().length ) {
+    <table mat-table [dataSource]="spaziData()" matSort matSort [matSortActive]="orderBy()"
+        [matSortDirection]="orderDir()" class="mat-elevation-z8">
+        <ng-container matColumnDef="stato">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Stato </th>
+            <td mat-cell *matCellDef="let element">
+                @if( element.stato === 'ATTIVO'){
+                <mat-icon color="tertiary" matTooltip="Attivo" class="filled">check_circle</mat-icon>
+                } @else {
+                <mat-icon color="warn" matTooltip="NON Attivo" class="filled">cancel</mat-icon>
+                }
+
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+            <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descrizione">
+            <th mat-header-cell *matHeaderCellDef> Descrizione </th>
+            <td mat-cell *matCellDef="let element"> {{element.descrizione}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="note">
+            <th mat-header-cell *matHeaderCellDef> Note </th>
+            <td mat-cell *matCellDef="let element"> {{element.note}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dimensione">
+            <th mat-header-cell *matHeaderCellDef> Dimensione </th>
+            <td mat-cell *matCellDef="let element">
+                Altezza: {{element.altezza}} m.<br>
+                Larghezza: {{element.larghezza}} m.<br>
+                Lunghezza: {{element.lunghezza}} m.</td>
+        </ng-container>
+
+        <ng-container matColumnDef="prezzo_giorno">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Prezzo/giorno </th>
+            <td mat-cell *matCellDef="let element"> {{element.prezzo_giorno}} €</td>
+        </ng-container>
+
+        <ng-container matColumnDef="azioni">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button matIconButton aria-label="Modifica" matTooltip="Modifica spazio"
+                    (click)="modificaSpazio(element, $event)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button matIconButton aria-label="Elimina" matTooltip="Elimina spazio"
+                    (click)="eliminaSpazio(element, $event)">
+                    <mat-icon color="warn">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="visualizzaDettagliSpazio(row, $event)">
+        </tr>
+    </table>
+
+    <mat-paginator [length]="totalElements()" [pageSize]="limit()" [pageIndex]="page() - 1"
+        [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)" aria-label="Seleziona pagina degli spazi"
+        class="mat-elevation-z8">
+    </mat-paginator>
+
+
+    } @else {
+    <p>Nessuno spazio disponibile, inserirli tramite il bottone aggiungi spazio.</p>
+    }
+    <!-- <pre>{{ spazi() | json }}</pre> -->
+</section>

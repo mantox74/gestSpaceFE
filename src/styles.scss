@@ -118,22 +118,6 @@ h6 {
     }
 }
 
-// RIPRISTINO DEL COLORE NATIVO DELLE ICONE CONTRO IL BUG DEL RESET DI TAILWIND 4
-mat-icon[color="primary"] {
-    color: var(--mat-sys-primary) !important;
-}
-
-mat-icon[color="accent"] {
-    color: var(--mat-sys-secondary) !important;
-}
-
-mat-icon[color="warn"] {
-    color: var(--mat-sys-error) !important;
-}
-
-mat-icon[color="tertiary"] {
-    color: var(--mat-sys-tertiary) !important;
-}
 
 
 // override del mat table
@@ -150,4 +134,51 @@ mat-icon[color="tertiary"] {
         padding-top: 1rem !important;
         padding-bottom: 1rem !important;
     }
+
+    // RIGHE ALTERNE GLOBALI PER TUTTE LE MAT-TABLE
+    tr.mat-mdc-row:nth-child(even) {
+        background-color: var(--mat-sys-surface-container-lower, #f0f0f0) !important;
+    }
+
+    // Opzionale: Effetto hover globale su tutte le righe
+    tr.mat-mdc-row:hover {
+        background-color: color-mix(in srgb, var(--mat-sys-primary) 10%, transparent) !important;
+        cursor: pointer;
+    }
+
+    // ALLINEAMENTO COLORE FRECCE DI SORTING CON IL TESTO HEADER
+    th.mat-mdc-header-cell {
+
+        // Seleziona la freccia del sorting sia quando è invisibile (hover) sia quando è attiva
+        .mat-sort-header-arrow {
+            color: inherit !important; // Forza la freccia a usare lo stesso identico colore del testo del TH
+            //opacity: 1 !important; // Rende la freccia definita e visibile quanto il testo
+        }
+    }
+}
+
+
+// ==========================================================================
+// FIX TAILWIND 4 con ANGULAR MATERIAL 3
+// ==========================================================================
+
+// 1. ICONE (Material Symbols & Icons)
+.filled {
+    font-variation-settings: 'FILL' 1 !important;
+}
+
+mat-icon[color="primary"] {
+    color: var(--mat-sys-primary) !important;
+}
+
+mat-icon[color="accent"] {
+    color: var(--mat-sys-secondary) !important;
+}
+
+mat-icon[color="warn"] {
+    color: var(--mat-sys-error) !important;
+}
+
+mat-icon[color="tertiary"] {
+    color: var(--mat-sys-tertiary) !important;
 }
