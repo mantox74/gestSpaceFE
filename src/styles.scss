@@ -6,12 +6,28 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
+:root {
+    //variabili personali
+    --custom-border-color: oklch(87.1% 0.006 286.286); // zinc 300 tailwind
+
+    // override della card
+    @include mat.card-overrides((filled-container-color: #fff, // colore di sfondo per card filled
+            filled-container-elevation: var(--mat-sys-level2), // elevazione per card filled
+        ));
+
+    // override del mat table
+    @include mat.table-overrides((header-headline-color: var(--mat-sys-on-primary),
+            header-headline-weight: 400,
+            background-color: var(--mat-sys-surface-container-lowest),
+            row-item-outline-color: var(--custom-border-color)));
+}
 
 html {
     height: 100%;
+    color-scheme: light dark;
     @include mat.theme((color: (primary: mat.$azure-palette,
-                tertiary: mat.$blue-palette,
-            ),
+                tertiary: mat.$green-palette,
+                warn: mat.$red-palette),
             typography: Roboto,
             density: 0,
         ));
@@ -102,6 +118,36 @@ h6 {
     }
 }
 
-@include mat.card-overrides((filled-container-color: #fff, // colore di sfondo per card filled
-        filled-container-elevation: var(--mat-sys-level2), // elevazione per card filled
-    ));
+// RIPRISTINO DEL COLORE NATIVO DELLE ICONE CONTRO IL BUG DEL RESET DI TAILWIND 4
+mat-icon[color="primary"] {
+    color: var(--mat-sys-primary) !important;
+}
+
+mat-icon[color="accent"] {
+    color: var(--mat-sys-secondary) !important;
+}
+
+mat-icon[color="warn"] {
+    color: var(--mat-sys-error) !important;
+}
+
+mat-icon[color="tertiary"] {
+    color: var(--mat-sys-tertiary) !important;
+}
+
+
+// override del mat table
+.mat-mdc-table {
+
+    // SFONDO dell'header del matTable
+    .mat-mdc-header-row {
+        background-color: var(--mat-sys-primary);
+    }
+
+    // Applica il padding a tutte le celle (sia header che dati)
+    .mat-mdc-header-cell,
+    .mat-mdc-cell {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+}
