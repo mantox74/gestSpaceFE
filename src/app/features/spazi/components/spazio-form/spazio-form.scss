@@ -1,0 +1,9 @@
+.spazio-form {
+    min-width: min(42rem, 72vw);
+}
+
+@media (max-width: 640px) {
+    .spazio-form {
+        min-width: 0;
+    }
+}

@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { SpaziDTO, SpaziSearchObj } from '@app/features/spazi/model/spazi.model';
+import {
+  SpaziDTO,
+  SpazioDTO,
+  SpazioPayload,
+  SpaziSearchObj,
+} from '@app/features/spazi/model/spazi.model';
 import * as env from '@env/environment';
 import { Observable } from 'rxjs/internal/Observable';
 
@@ -15,7 +20,15 @@ export class SpaziService {
    */
   getSpazi(searchObj: SpaziSearchObj): Observable<SpaziDTO> {
     return this.http.post<SpaziDTO>(`${env.environment.apiUrl}/spazi`, {
-      ...(searchObj as any),
+      ...searchObj,
     });
+  }
+
+  creaSpazio(payload: SpazioPayload): Observable<SpazioDTO> {
+    return this.http.post<SpazioDTO>(`${env.environment.apiUrl}/spazi/nuovo`, payload);
+  }
+
+  modificaSpazio(id: number, payload: SpazioPayload): Observable<SpazioDTO> {
+    return this.http.put<SpazioDTO>(`${env.environment.apiUrl}/spazi/${id}`, payload);
   }
 }

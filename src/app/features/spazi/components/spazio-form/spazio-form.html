@@ -1,0 +1,71 @@
+<form class="spazio-form grid grid-cols-1 gap-4 md:grid-cols-2" (submit)="$event.preventDefault()">
+    <mat-form-field class="md:col-span-2">
+        <mat-label>Nome</mat-label>
+        <input matInput [formField]="spazioForm.nome" />
+        @if (submitted() && spazioForm.nome().invalid()) {
+        @for (error of spazioForm.nome().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Prezzo giornaliero</mat-label>
+        <input matInput type="number" [formField]="spazioForm.prezzo_giorno" />
+        @if (submitted() && spazioForm.prezzo_giorno().invalid()) {
+        @for (error of spazioForm.prezzo_giorno().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    @if (showStato()) {
+    <mat-form-field>
+        <mat-label>Stato</mat-label>
+        <mat-select [formField]="spazioForm.stato">
+            <mat-option value="ATTIVO">Attivo</mat-option>
+            <mat-option value="NON_ATTIVO">Non attivo</mat-option>
+        </mat-select>
+    </mat-form-field>
+    }
+
+    <mat-form-field>
+        <mat-label>Lunghezza</mat-label>
+        <input matInput type="number" [formField]="spazioForm.lunghezza" />
+        @if (submitted() && spazioForm.lunghezza().invalid()) {
+        @for (error of spazioForm.lunghezza().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Larghezza</mat-label>
+        <input matInput type="number" [formField]="spazioForm.larghezza" />
+        @if (submitted() && spazioForm.larghezza().invalid()) {
+        @for (error of spazioForm.larghezza().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Altezza</mat-label>
+        <input matInput type="number" [formField]="spazioForm.altezza" />
+        @if (submitted() && spazioForm.altezza().invalid()) {
+        @for (error of spazioForm.altezza().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field class="md:col-span-2">
+        <mat-label>Descrizione</mat-label>
+        <textarea matInput rows="3" [formField]="spazioForm.descrizione"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="md:col-span-2">
+        <mat-label>Note</mat-label>
+        <textarea matInput rows="3" [formField]="spazioForm.note"></textarea>
+    </mat-form-field>
+</form>

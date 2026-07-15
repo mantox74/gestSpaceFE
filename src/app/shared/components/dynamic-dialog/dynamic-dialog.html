@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<mat-dialog-content>
+    @if (data.description) {
+    <p class="dynamic-dialog__description">{{ data.description }}</p>
+    }
+
+    <ng-template #contentHost />
+</mat-dialog-content>
+
+@if (data.actions?.length) {
+<mat-dialog-actions align="end">
+    @for (action of data.actions; track action.label) {
+    <button type="button" [matButton]="buttonAttribute(action)" [disabled]="isActionDisabled(action)"
+        (click)="runAction(action)">
+        @if (action.icon) {
+        <mat-icon>{{ action.icon }}</mat-icon>
+        }
+        {{ action.label }}
+    </button>
+    }
+</mat-dialog-actions>
+}

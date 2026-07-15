@@ -1,11 +1,24 @@
 <section class="spazi-list__wrapper">
-    <h1>Lista spazi</h1>
+    <header class="spazi-list__header flex justify-between items-center">
+        <h1>Lista spazi</h1>
 
-    <div class="function-menu__wrapper flex justify-end mb-4 mt-4">
-        <button matButton="filled">
-            <mat-icon>add</mat-icon>
-            Aggiungi spazio
-        </button>
+        <div class="function-menu__wrapper flex justify-end gap-4 mb-4 mt-4">
+
+            <button matButton="filled" type="button" (click)="aggiungiSpazio()">
+                <mat-icon>add</mat-icon>
+                Aggiungi spazio
+            </button>
+
+            <button matButton="outlined" type="button" (click)="toggleApplicableFilters()"
+                [attr.aria-expanded]="showApplicableFilters()" aria-controls="spazi-search-panel">
+                <mat-icon>{{ showApplicableFilters() ? 'filter_alt_off' : 'filter_alt' }}</mat-icon>
+                {{ showApplicableFilters() ? 'Nascondi filtri' : 'Mostra filtri' }}
+            </button>
+        </div>
+    </header>
+    <div id="spazi-search-panel">
+        <app-spazi-search-form [filters]="filters()" [showFilters]="showApplicableFilters()"
+            (filtersChange)="onFiltersChange($event)" />
     </div>
     @if( !!spaziData().length ) {
     <table mat-table [dataSource]="spaziData()" matSort matSort [matSortActive]="orderBy()"

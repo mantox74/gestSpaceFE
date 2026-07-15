@@ -1,1 +1,58 @@
-<p>spazi-search-form works!</p>
+<section class="spazi-search" aria-label="Filtri spazi">
+    <app-chips-ricerca [chips]="activeChips()" (removed)="removeFilter($event)" />
+
+    @if (showFilters()) {
+    <form class="spazi-search__form grid grid-cols-1 gap-4 lg:grid-cols-4 xl:grid-cols-6"
+        (submit)="$event.preventDefault(); applyFilters()">
+        <mat-form-field class="col-span-1 lg:col-span-3">
+            <mat-label>Ricerca</mat-label>
+            <input matInput type="search" [formField]="filterForm.search" placeholder="Nome, descrizione o note" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Stato</mat-label>
+            <mat-select [formField]="filterForm.stato">
+                <mat-option value="">Tutti</mat-option>
+                <mat-option value="ATTIVO">Attivo</mat-option>
+                <mat-option value="NON_ATTIVO">Non attivo</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Prezzo min.</mat-label>
+            <input matInput type="number" [formField]="filterForm.prezzo_min" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Prezzo max.</mat-label>
+            <input matInput type="number" [formField]="filterForm.prezzo_max" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Lunghezza min.</mat-label>
+            <input matInput type="number" [formField]="filterForm.lunghezza_min" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Larghezza min.</mat-label>
+            <input matInput type="number" [formField]="filterForm.larghezza_min" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Altezza min.</mat-label>
+            <input matInput type="number" [formField]="filterForm.altezza_min" />
+        </mat-form-field>
+
+        <div class="spazi-search__actions flex justify-start gap-4 col-span-1 lg:col-span-2">
+            <button matButton="filled" type="submit">
+                <mat-icon>filter_alt</mat-icon>
+                Applica filtri
+            </button>
+            <button matButton="outlined" type="button" (click)="resetFilters()">
+                <mat-icon>filter_alt_off</mat-icon>
+                Cancella filtri
+            </button>
+        </div>
+    </form>
+    }
+</section>
