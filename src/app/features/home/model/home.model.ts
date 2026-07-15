@@ -21,6 +21,27 @@ export interface HomeFattureStato {
   totale: number;
 }
 
+export interface HomePrenotazioniStato {
+  confermate: number;
+  in_corso: number;
+  concluse: number;
+  annullate: number;
+  totale: number;
+}
+
+export interface HomePreventiviValoreStato {
+  totale_preventivi: number;
+  totale_valore: number;
+  stati: HomePreventiviValoreStatoItem[];
+}
+
+export interface HomePreventiviValoreStatoItem {
+  stato: 'BOZZA' | 'INVIATO' | 'ACCETTATO' | 'RIFIUTATO' | 'ANNULLATO';
+  etichetta: string;
+  totale: number;
+  valore: number;
+}
+
 export interface HomeFatturato {
   anno: number;
   raggruppamento: 'mensile' | 'trimestrale';

@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse, httpResource } from '@angular/common/http';
 import { Component, computed, effect, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { SnackBarService } from '@app/core/services/snack-bar-service';
 import {
   HomeFatturato,
   HomeFattureStato,
+  HomePrenotazioniStato,
+  HomePreventiviValoreStato,
   HomePreventivo,
   HomeSpazio,
 } from '@app/features/home/model/home.model';
@@ -33,7 +36,7 @@ echarts.use([
 
 @Component({
   selector: 'app-home.component',
-  imports: [CommonModule, NgxEchartsDirective],
+  imports: [CommonModule, RouterLink, NgxEchartsDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   providers: [provideEchartsCore({ echarts })],
@@ -163,6 +166,9 @@ export class HomeComponent {
       text: 'Stato fatture (totale: ' + (this.fattureStato.value()?.totale || 0) + ')',
       subtext: 'Aggiornato oggi',
       left: 'center',
+      top: 8,
+      textStyle: { fontSize: 18 },
+      subtextStyle: { fontSize: 12 },
     },
     color: ['#FF8B12', '#53C058', '#BA274A'],
     tooltip: {
@@ -173,17 +179,23 @@ export class HomeComponent {
       {
         name: 'Fatture',
         type: 'pie',
-        radius: [30, 110],
+        center: ['50%', '58%'],
+        radius: ['22%', '48%'],
         roseType: 'radius', // undefined | 'radius' | 'area'
+        avoidLabelOverlap: true,
         label: {
           show: true,
           formatter: '{b} ({c})', // {a}=series, {b}=name, {c}=value, {d}=percent
           fontSize: 12,
           overflow: 'break', // 'truncate' | 'break' | 'breakAll'
         },
+        labelLine: {
+          length: 10,
+          length2: 8,
+        },
         emphasis: {
           scale: true, // espande la fetta al hover
-          scaleSize: 20, // pixel di espansione
+          scaleSize: 8, // pixel di espansione
           itemStyle: {
             shadowBlur: 10,
             shadowOffsetX: 0,
@@ -202,6 +214,140 @@ export class HomeComponent {
     ],
   }));
 
+  prenotazioniStato = httpResource<HomePrenotazioniStato>(
+    () => `${env.environment.apiUrl}/dashboard/prenotazioni-stato`,
+  );
+  prenotazioniStatoChartOptions = computed<EChartsOption>(() => ({
+    title: {
+      text:
+        'Prenotazioni per stato (totale: ' + (this.prenotazioniStato.value()?.totale || 0) + ')',
+      subtext: 'Situazione operativa',
+      left: 'center',
+    },
+    color: ['#2191FB', '#4CAF50', '#8D99AE', '#BA274A'],
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'shadow' },
+    },
+    grid: {
+      top: 80,
+      bottom: 28,
+      left: 16,
+      right: 24,
+      containLabel: true,
+    },
+    xAxis: {
+      type: 'value',
+      minInterval: 1,
+    },
+    yAxis: {
+      type: 'category',
+      data: ['Confermate', 'In corso', 'Concluse', 'Annullate'],
+    },
+    series: [
+      {
+        name: 'Prenotazioni',
+        type: 'bar',
+        data: [
+          this.prenotazioniStato.value()?.confermate || 0,
+          this.prenotazioniStato.value()?.in_corso || 0,
+          this.prenotazioniStato.value()?.concluse || 0,
+          this.prenotazioniStato.value()?.annullate || 0,
+        ],
+        itemStyle: { borderRadius: [0, 4, 4, 0] },
+        label: {
+          show: true,
+          position: 'right',
+        },
+      },
+    ],
+  }));
+
+  preventiviValoreStato = httpResource<HomePreventiviValoreStato>(
+    () => `${env.environment.apiUrl}/dashboard/preventivi-valore-stato`,
+  );
+  preventiviValoreStatoChartOptions = computed<EChartsOption>(() => {
+    const dati = this.preventiviValoreStato.value();
+    const stati = dati?.stati || [];
+
+    return {
+      title: {
+        text: 'Valore preventivi per stato',
+        subtext:
+          'Totale: € ' +
+          (dati?.totale_valore || 0).toLocaleString('it-IT', { minimumFractionDigits: 2 }),
+        left: 'center',
+      },
+      color: ['#FF7F11', '#2191FB'],
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: { type: 'shadow' },
+        formatter: (params: any) => {
+          const list = Array.isArray(params) ? params : [params];
+          const stato = list[0].axisValue;
+          let html = `<strong>${stato}</strong><br/>`;
+          list.forEach((p: any) => {
+            const value =
+              p.seriesName === 'Valore'
+                ? `€ ${Number(p.value).toLocaleString('it-IT', { minimumFractionDigits: 2 })}`
+                : p.value;
+            html += `${p.marker} ${p.seriesName}: <strong>${value}</strong><br/>`;
+          });
+          return html;
+        },
+      },
+      legend: {
+        bottom: 0,
+        data: ['Valore', 'N° preventivi'],
+      },
+      grid: {
+        top: 80,
+        bottom: 50,
+        left: 16,
+        right: 60,
+        containLabel: true,
+      },
+      xAxis: {
+        type: 'category',
+        data: stati.map((item) => item.etichetta),
+      },
+      yAxis: [
+        {
+          type: 'value',
+          name: '€',
+          axisLabel: {
+            formatter: (val: number) =>
+              val >= 1000 ? `€ ${(val / 1000).toFixed(0)}k` : `€ ${val}`,
+          },
+        },
+        {
+          type: 'value',
+          name: 'Preventivi',
+          minInterval: 1,
+          splitLine: { show: false },
+        },
+      ],
+      series: [
+        {
+          name: 'Valore',
+          type: 'bar',
+          data: stati.map((item) => item.valore),
+          itemStyle: { borderRadius: [4, 4, 0, 0] },
+        },
+        {
+          name: 'N° preventivi',
+          type: 'line',
+          yAxisIndex: 1,
+          data: stati.map((item) => item.totale),
+          smooth: true,
+          symbol: 'circle',
+          symbolSize: 8,
+          lineStyle: { width: 2 },
+        },
+      ],
+    };
+  });
+
   preventivi = httpResource<HomePreventivo>(
     () => `${env.environment.apiUrl}/dashboard/preventivi-stato`,
   );
@@ -210,6 +356,9 @@ export class HomeComponent {
       text: 'Stato preventivi (totale: ' + (this.preventivi.value()?.totale || 0) + ')',
       subtext: 'Aggiornato oggi',
       left: 'center',
+      top: 8,
+      textStyle: { fontSize: 18 },
+      subtextStyle: { fontSize: 12 },
     },
     color: ['#FF7F11', '#BA274A', '#4CAF50', '#2191FB', '#48435C'],
     tooltip: {
@@ -220,17 +369,23 @@ export class HomeComponent {
       {
         name: 'Preventivi',
         type: 'pie',
-        radius: [30, 110],
+        center: ['50%', '58%'],
+        radius: ['20%', '46%'],
         roseType: 'radius', // undefined | 'radius' | 'area'
+        avoidLabelOverlap: true,
         label: {
           show: true,
           formatter: '{b} ({c})', // {a}=series, {b}=name, {c}=value, {d}=percent
           fontSize: 12,
           overflow: 'break', // 'truncate' | 'break' | 'breakAll'
         },
+        labelLine: {
+          length: 10,
+          length2: 8,
+        },
         emphasis: {
           scale: true, // espande la fetta al hover
-          scaleSize: 20, // pixel di espansione
+          scaleSize: 8, // pixel di espansione
           itemStyle: {
             shadowBlur: 10,
             shadowOffsetX: 0,
@@ -257,6 +412,9 @@ export class HomeComponent {
       text: 'Stato occupazione spazi (totale: ' + (this.spazi.value()?.totale || 0) + ')',
       subtext: 'Aggiornato oggi',
       left: 'center',
+      top: 8,
+      textStyle: { fontSize: 18 },
+      subtextStyle: { fontSize: 12 },
     },
     // Legenda
     // legend: {
@@ -276,7 +434,9 @@ export class HomeComponent {
         roseType: 'radius', // undefined | 'radius' | 'area'
         name: 'Spazi',
         type: 'pie',
-        radius: [30, 110],
+        center: ['50%', '58%'],
+        radius: ['22%', '48%'],
+        avoidLabelOverlap: true,
         label: {
           show: true, // true | false
           // position: 'outside', // 'outside' | 'inside' | 'center'
@@ -285,6 +445,10 @@ export class HomeComponent {
           fontSize: 12,
           // color: '#333',
           overflow: 'break', // 'truncate' | 'break' | 'breakAll'
+        },
+        labelLine: {
+          length: 10,
+          length2: 8,
         },
         // labelLine: {
         //   show: true,
@@ -295,7 +459,7 @@ export class HomeComponent {
         // === HOVER ===
         emphasis: {
           scale: true, // espande la fetta al hover
-          scaleSize: 20, // pixel di espansione
+          scaleSize: 8, // pixel di espansione
           itemStyle: {
             shadowBlur: 10,
             shadowOffsetX: 0,

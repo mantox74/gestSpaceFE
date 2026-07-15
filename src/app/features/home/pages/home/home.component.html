@@ -9,16 +9,47 @@
     <h1>Dashboard</h1>
     <div class="dashboard__chart grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         <div class="dashboard__chart-item col-span-3 lg:col-span-1">
-            <div echarts [loading]="spazi.isLoading()" [options]="spaziChartOptions()"></div>
+            <div class="dashboard__chart-header">
+                <a class="dashboard__chart-link" routerLink="/spazi">Apri spazi</a>
+            </div>
+            <div class="dashboard__chart-visual" echarts [loading]="spazi.isLoading()" [options]="spaziChartOptions()">
+            </div>
         </div>
         <div class="dashboard__chart-item col-span-3 lg:col-span-1">
-            <div echarts [loading]="preventivi.isLoading()" [options]="preventiviChartOptions()"></div>
+            <div class="dashboard__chart-header">
+                <a class="dashboard__chart-link" routerLink="/preventivi">Apri preventivi</a>
+            </div>
+            <div class="dashboard__chart-visual" echarts [loading]="preventivi.isLoading()"
+                [options]="preventiviChartOptions()"></div>
         </div>
         <div class="dashboard__chart-item col-span-3 lg:col-span-2 xl:col-span-1">
-            <div echarts [loading]="fattureStato.isLoading()" [options]="fattureStatoChartOptions()"></div>
+            <div class="dashboard__chart-header">
+                <a class="dashboard__chart-link" routerLink="/fatture">Apri fatture</a>
+            </div>
+            <div class="dashboard__chart-visual" echarts [loading]="fattureStato.isLoading()"
+                [options]="fattureStatoChartOptions()"></div>
+        </div>
+        <div class="dashboard__chart-item col-span-3 lg:col-span-1">
+            <div class="dashboard__chart-header">
+                <a class="dashboard__chart-link" routerLink="/prenotazioni">Apri prenotazioni</a>
+            </div>
+            <div class="dashboard__chart-visual" echarts [loading]="prenotazioniStato.isLoading()"
+                [options]="prenotazioniStatoChartOptions()"></div>
+        </div>
+        <div class="dashboard__chart-item col-span-3 lg:col-span-2">
+            <div class="dashboard__chart-header">
+                <a class="dashboard__chart-link" routerLink="/preventivi">Apri preventivi</a>
+            </div>
+            <div class="dashboard__chart-visual" echarts [loading]="preventiviValoreStato.isLoading()"
+                [options]="preventiviValoreStatoChartOptions()">
+            </div>
         </div>
         <div class="dashboard__chart-item col-span-3 lg:col-span-2 xl:col-span-3">
-            <div echarts [loading]="fatturato.isLoading()" [options]="fatturatoChartOptions()"></div>
+            <div class="dashboard__chart-header">
+                <a class="dashboard__chart-link" routerLink="/fatture">Apri fatture</a>
+            </div>
+            <div class="dashboard__chart-visual" echarts [loading]="fatturato.isLoading()"
+                [options]="fatturatoChartOptions()"></div>
         </div>
     </div>
 </section>
