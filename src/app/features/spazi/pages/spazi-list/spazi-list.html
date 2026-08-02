@@ -66,6 +66,10 @@
         <ng-container matColumnDef="azioni">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
+                <button matIconButton aria-label="Visualizza dettagli" matTooltip="Visualizza dettagli spazio"
+                    (click)="visualizzaDettagliSpazio(element, $event)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
                 <button matIconButton aria-label="Modifica" matTooltip="Modifica spazio"
                     (click)="modificaSpazio(element, $event)">
                     <mat-icon>edit</mat-icon>

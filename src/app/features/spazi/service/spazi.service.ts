@@ -25,10 +25,54 @@ export class SpaziService {
   }
 
   creaSpazio(payload: SpazioPayload): Observable<SpazioDTO> {
-    return this.http.post<SpazioDTO>(`${env.environment.apiUrl}/spazi/nuovo`, payload);
+    return this.http.post<SpazioDTO>(
+      `${env.environment.apiUrl}/spazi/nuovo`,
+      this.toFormData(payload),
+    );
   }
 
   modificaSpazio(id: number, payload: SpazioPayload): Observable<SpazioDTO> {
-    return this.http.put<SpazioDTO>(`${env.environment.apiUrl}/spazi/${id}`, payload);
+    return this.http.put<SpazioDTO>(
+      `${env.environment.apiUrl}/spazi/${id}`,
+      this.toFormData(payload),
+    );
+  }
+
+  private toFormData(payload: SpazioPayload): FormData {
+    const formData = new FormData();
+
+    formData.set('nome', payload.nome);
+    formData.set('prezzo_giorno', String(payload.prezzo_giorno));
+    formData.set('stato', payload.stato);
+
+    if (payload.descrizione !== null) {
+      formData.set('descrizione', payload.descrizione);
+    }
+
+    if (payload.note !== null) {
+      formData.set('note', payload.note);
+    }
+
+    if (payload.lunghezza !== null) {
+      formData.set('lunghezza', String(payload.lunghezza));
+    }
+
+    if (payload.larghezza !== null) {
+      formData.set('larghezza', String(payload.larghezza));
+    }
+
+    if (payload.altezza !== null) {
+      formData.set('altezza', String(payload.altezza));
+    }
+
+    if (payload.immagine) {
+      formData.set('immagine', payload.immagine);
+    }
+
+    if (payload.rimuoviImmagine) {
+      formData.set('rimuoviImmagine', 'true');
+    }
+
+    return formData;
   }
 }

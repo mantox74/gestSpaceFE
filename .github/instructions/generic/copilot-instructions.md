@@ -13,7 +13,7 @@ applyTo: '**/*.{ts,html,scss,json}'
 
 - Inserisci l'infrastruttura singleton dell'app in `src/app/core`, inclusi auth, guard, interceptor e servizi trasversali.
 - Inserisci UI riutilizzabile, utility e modelli condivisi in `src/app/shared`.
-- Inserisci le funzionalita' di dominio in `src/app/features/<feature>`, mantenendo pagine, componenti, modelli, servizi e route di feature vicini alla relativa funzionalita'.
+- Inserisci le funzionalita' di dominio in `src/app/features/<feature>` dove 'feature' è il nome della funzionalità che stai sviluppando, mantenendo pagine, componenti, modelli, servizi e route di feature vicini alla relativa funzionalita'.
 - Usa il lazy loading per aree e pagine di feature, seguendo i pattern esistenti con `loadComponent` e `loadChildren` in `app.routes.ts`.
 - Usa gli alias configurati, come `@app`, `@features` e `@env`, invece di import relativi lunghi quando importi tra boundary di feature.
 
@@ -23,7 +23,7 @@ applyTo: '**/*.{ts,html,scss,json}'
 - Non aggiungere `ChangeDetectionStrategy.OnPush`: OnPush e' il default in Angular 22.
 - Usa `inject()` per la dependency injection, in coerenza con componenti e servizi esistenti.
 - Preferisci i signals per lo stato locale, `computed()` per lo stato derivato, e `set` o `update` per scrivere nei signals.
-- Preferisci Signal Forms da `@angular/forms/signals` per i nuovi form; altrimenti usa reactive forms, non template-driven forms.
+- Preferisci Signal Forms da `@angular/forms/signals` per i nuovi form; altrimenti usa reactive forms, non usare mai i template-driven forms.
 - Quando usi i signal forms, usa le API native per i validatori, disabled, e altre proprietà dei campi.
 - Usa il control flow nativo nei template (`@if`, `@for`, `@switch`) per la nuova logica di template.
 - Evita `any`. Se una callback di terze parti e' difficile da tipizzare, cerca prima tipi esportati dalla libreria; usa `unknown` come fallback.
@@ -35,7 +35,7 @@ applyTo: '**/*.{ts,html,scss,json}'
 - Leggi gli URL backend da `@env/environment`; non inserire hostname hard-coded in componenti o servizi.
 - Preserva il flusso di autenticazione JWT esistente tramite `AuthService`, `authGuard` e interceptor HTTP.
 - Usa `httpResource` per letture semplici in stile resource quando si adatta al pattern esistente; usa servizi basati su `HttpClient` per comandi, form e workflow API piu' ricchi.
-- Mostra gli errori visibili all'utente tramite `SnackBarService`, con messaggi in italiano.
+- Mostra gli errori, informazioni e warning visibili all'utente tramite `SnackBarService`, con messaggi in italiano.
 - Mantieni in italiano etichette, testi visibili e messaggi di validazione, salvo che la feature circostante usi gia' un'altra lingua.
 
 ## UI e stile

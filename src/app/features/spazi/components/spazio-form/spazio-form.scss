@@ -2,8 +2,79 @@
     min-width: min(42rem, 72vw);
 }
 
+.image-field {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--mat-sys-outline-variant) 82%, transparent);
+    border-radius: 1rem;
+    background: var(--mat-sys-surface-container-lowest);
+}
+
+.image-stage {
+    width: 8.5rem;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    background: var(--mat-sys-surface-container-highest);
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--mat-sys-shadow) 18%, transparent);
+}
+
+.image-stage img,
+.image-placeholder {
+    width: 100%;
+    height: 100%;
+}
+
+.image-stage img {
+    display: block;
+    object-fit: cover;
+}
+
+.image-placeholder {
+    display: grid;
+    place-items: center;
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.image-placeholder mat-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 2.5rem;
+}
+
+.image-actions {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 @media (max-width: 640px) {
     .spazio-form {
         min-width: 0;
+    }
+
+    .image-field {
+        grid-template-columns: 1fr;
+    }
+
+    .image-stage {
+        width: 100%;
+    }
+
+    .image-actions {
+        justify-content: flex-end;
     }
 }

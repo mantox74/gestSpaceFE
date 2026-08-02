@@ -1,0 +1,50 @@
+<article class="spazio-detail">
+    <figure class="spazio-detail__image-frame">
+        <img [src]="imageSrc()" [alt]="'Immagine dello spazio ' + spazio().nome" (error)="onImageError()" />
+    </figure>
+
+    <section class="spazio-detail__content" aria-labelledby="spazio-detail-title">
+        <div class="spazio-detail__heading">
+            <div>
+                <h2 id="spazio-detail-title">{{ spazio().nome }}</h2>
+            </div>
+
+            <mat-chip-set aria-label="Stato spazio">
+                <mat-chip [class.spazio-detail__status--active]="spazio().stato === 'ATTIVO'"
+                    [class.spazio-detail__status--inactive]="spazio().stato !== 'ATTIVO'">
+                    <mat-icon>{{ spazio().stato === 'ATTIVO' ? 'check_circle' : 'cancel' }}</mat-icon>
+                    <span>{{ statoLabel() }}</span>
+                </mat-chip>
+            </mat-chip-set>
+        </div>
+
+        <div class="spazio-detail__section">
+            <h3>Descrizione</h3>
+            <p>{{ spazio().descrizione || 'Nessuna descrizione disponibile.' }}</p>
+        </div>
+
+        <div>
+            <h3>Dimensioni</h3>
+            <dl class="spazio-detail__grid">
+                @for (item of dimensioni(); track item.label) {
+                <div class="spazio-detail__metric">
+                    <dt>{{ item.label }}</dt>
+                    <dd>{{ item.value || '-' }} @if (item.value) {<span>{{ item.suffix }}</span>}</dd>
+                </div>
+                }
+            </dl>
+        </div>
+
+
+        <div class="spazio-detail__section">
+            <h3>Note</h3>
+            <p>{{ spazio().note || 'Nessuna nota inserita.' }}</p>
+        </div>
+
+        <div class="spazio-prezzo">
+            <h3>Prezzo giornaliero</h3>
+            <p>{{ spazio().prezzo_giorno | currency:'EUR' }}</p>
+        </div>
+
+    </section>
+</article>

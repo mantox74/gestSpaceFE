@@ -7,12 +7,14 @@ import { Observable } from 'rxjs/internal/Observable';
 @Component({
   selector: 'app-spazio-edit-form',
   imports: [SpazioForm],
-  template: '<app-spazio-form [spazio]="spazio()" [showStato]="true" />',
+  template:
+    '<app-spazio-form [spazio]="spazio()" [showStato]="true" [isReadonly]="isReadonly()" />',
 })
 export class SpazioEditForm {
   private spaziService = inject(SpaziService);
   private form = viewChild.required(SpazioForm);
   spazio = input.required<SpazioDTO>();
+  isReadonly = input(false);
 
   salva(): Observable<SpazioDTO> | null {
     const payload = this.form().getPayload();

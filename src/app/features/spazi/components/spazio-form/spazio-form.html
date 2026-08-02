@@ -1,8 +1,38 @@
 <form class="spazio-form grid grid-cols-1 gap-4 md:grid-cols-2" (submit)="$event.preventDefault()">
+    <div class="image-field md:col-span-full mb-4" aria-labelledby="spazio-image-label">
+
+        <span id="spazio-image-label" class="col-span-full">Anteprima immagine spazio</span>
+
+
+        <div class="image-stage">
+            @if (imageSrc(); as src) {
+            <img [src]="src" alt="Immagine dello spazio" />
+            }
+            @else {
+            <div class="image-placeholder" aria-hidden="true">
+                <mat-icon>add_photo_alternate</mat-icon>
+            </div>
+            }
+        </div>
+
+        <div class="image-actions">
+            <input #imageInput class="sr-only" type="file" accept="image/*" (change)="onImageSelected($event)"
+                aria-label="Seleziona immagine spazio" />
+            <button matIconButton type="button" [disabled]="isReadonly()" matTooltip="Modifica immagine"
+                aria-label="Modifica immagine spazio" (click)="imageInput.click()">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button matIconButton type="button" matTooltip="Elimina immagine" aria-label="Elimina immagine spazio"
+                [disabled]="!imageSrc()" [disabled]="isReadonly()" (click)="removeImage()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+
     <mat-form-field class="md:col-span-2">
         <mat-label>Nome</mat-label>
         <input matInput [formField]="spazioForm.nome" />
-        @if (submitted() && spazioForm.nome().invalid()) {
+        @if (spazioForm.nome().touched() && spazioForm.nome().invalid()) {
         @for (error of spazioForm.nome().errors(); track error.kind) {
         <mat-error>{{ error.message }}</mat-error>
         }
@@ -12,7 +42,7 @@
     <mat-form-field>
         <mat-label>Prezzo giornaliero</mat-label>
         <input matInput type="number" [formField]="spazioForm.prezzo_giorno" />
-        @if (submitted() && spazioForm.prezzo_giorno().invalid()) {
+        @if (spazioForm.prezzo_giorno().touched() && spazioForm.prezzo_giorno().invalid()) {
         @for (error of spazioForm.prezzo_giorno().errors(); track error.kind) {
         <mat-error>{{ error.message }}</mat-error>
         }
@@ -32,7 +62,7 @@
     <mat-form-field>
         <mat-label>Lunghezza</mat-label>
         <input matInput type="number" [formField]="spazioForm.lunghezza" />
-        @if (submitted() && spazioForm.lunghezza().invalid()) {
+        @if (spazioForm.lunghezza().touched() && spazioForm.lunghezza().invalid()) {
         @for (error of spazioForm.lunghezza().errors(); track error.kind) {
         <mat-error>{{ error.message }}</mat-error>
         }
@@ -42,7 +72,7 @@
     <mat-form-field>
         <mat-label>Larghezza</mat-label>
         <input matInput type="number" [formField]="spazioForm.larghezza" />
-        @if (submitted() && spazioForm.larghezza().invalid()) {
+        @if (spazioForm.larghezza().touched() && spazioForm.larghezza().invalid()) {
         @for (error of spazioForm.larghezza().errors(); track error.kind) {
         <mat-error>{{ error.message }}</mat-error>
         }
@@ -52,7 +82,7 @@
     <mat-form-field>
         <mat-label>Altezza</mat-label>
         <input matInput type="number" [formField]="spazioForm.altezza" />
-        @if (submitted() && spazioForm.altezza().invalid()) {
+        @if (spazioForm.altezza().touched() && spazioForm.altezza().invalid()) {
         @for (error of spazioForm.altezza().errors(); track error.kind) {
         <mat-error>{{ error.message }}</mat-error>
         }

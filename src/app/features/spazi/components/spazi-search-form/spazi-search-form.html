@@ -2,7 +2,7 @@
     <app-chips-ricerca [chips]="activeChips()" (removed)="removeFilter($event)" />
 
     @if (showFilters()) {
-    <form class="spazi-search__form grid grid-cols-1 gap-4 lg:grid-cols-4 xl:grid-cols-6"
+    <form class="spazi-search__form grid grid-cols-1 gap-4 lg:grid-cols-4 xl:grid-cols-6" enctype="multipart/form-data"
         (submit)="$event.preventDefault(); applyFilters()">
         <mat-form-field class="col-span-1 lg:col-span-3">
             <mat-label>Ricerca</mat-label>

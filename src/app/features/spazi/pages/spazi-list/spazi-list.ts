@@ -10,6 +10,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SnackBarService } from '@app/core/services/snack-bar-service';
 import { SpazioCreateForm } from '@app/features/spazi/components/spazio-create-form/spazio-create-form';
+import { SpazioDetail } from '@app/features/spazi/components/spazio-detail/spazio-detail';
 import { SpazioEditForm } from '@app/features/spazi/components/spazio-edit-form/spazio-edit-form';
 import { SpaziDTO, SpaziFilters, SpazioDTO } from '@app/features/spazi/model/spazi.model';
 import { SpaziService } from '@app/features/spazi/service/spazi.service';
@@ -142,7 +143,24 @@ export class SpaziList {
    */
   visualizzaDettagliSpazio(spazio: SpazioDTO, event: MouseEvent): void {
     this.stopPropagation(event); // Evita che l'evento si propaghi ad altri elementi
-    alert('Visualizza dettagli spazio:' + JSON.stringify(spazio, null, 2));
+    this.dialog.open(DynamicDialog<SpazioDetail>, {
+      width: 'min(64rem, 96vw)',
+      maxWidth: '96vw',
+      data: {
+        title: 'Dettagli spazio',
+        description: 'Visualizza le informazioni dello spazio selezionato.',
+        component: SpazioDetail,
+        componentInputs: { spazio },
+        actions: [
+          {
+            label: 'Chiudi',
+            icon: 'close',
+            appearance: 'outlined',
+            closesDialog: true,
+          },
+        ] satisfies DynamicDialogAction<SpazioDetail>[],
+      },
+    });
   }
 
   aggiungiSpazio(): void {

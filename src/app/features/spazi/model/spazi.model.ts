@@ -39,7 +39,7 @@ export interface SpazioDTO {
   nome: string;
   descrizione: string;
   prezzo_giorno: string;
-  stato: string;
+  stato: SpazioStato;
   note: string;
   created_at: string;
   lunghezza: string;
@@ -52,9 +52,11 @@ export interface SpazioPayload {
   nome: string;
   descrizione: string | null;
   prezzo_giorno: number;
-  stato?: SpazioStato;
+  stato: SpazioStato;
   note: string | null;
   lunghezza: number | null;
   larghezza: number | null;
   altezza: number | null;
+  immagine?: File | null;
+  rimuoviImmagine?: boolean;
 }
