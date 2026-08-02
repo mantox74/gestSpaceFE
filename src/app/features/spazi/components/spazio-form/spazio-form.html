@@ -1,8 +1,11 @@
 <form class="spazio-form grid grid-cols-1 gap-4 md:grid-cols-2" (submit)="$event.preventDefault()">
     <div class="image-field md:col-span-full mb-4" aria-labelledby="spazio-image-label">
-
-        <span id="spazio-image-label" class="col-span-full">Anteprima immagine spazio</span>
-
+        <div class="image-field__header">
+            <div>
+                <span id="spazio-image-label" class="image-field__title">Immagine spazio</span>
+                <p class="image-field__hint">Carica una foto rappresentativa dello spazio.</p>
+            </div>
+        </div>
 
         <div class="image-stage">
             @if (imageSrc(); as src) {
@@ -11,21 +14,24 @@
             @else {
             <div class="image-placeholder" aria-hidden="true">
                 <mat-icon>add_photo_alternate</mat-icon>
+                <span>Nessuna immagine caricata</span>
             </div>
             }
-        </div>
 
-        <div class="image-actions">
             <input #imageInput class="sr-only" type="file" accept="image/*" (change)="onImageSelected($event)"
                 aria-label="Seleziona immagine spazio" />
-            <button matIconButton type="button" [disabled]="isReadonly()" matTooltip="Modifica immagine"
-                aria-label="Modifica immagine spazio" (click)="imageInput.click()">
-                <mat-icon>edit</mat-icon>
-            </button>
-            <button matIconButton type="button" matTooltip="Elimina immagine" aria-label="Elimina immagine spazio"
-                [disabled]="!imageSrc()" [disabled]="isReadonly()" (click)="removeImage()">
-                <mat-icon>delete</mat-icon>
-            </button>
+            @if (!isReadonly()) {
+            <div class="image-actions" aria-label="Azioni immagine spazio">
+                <button matIconButton type="button" matTooltip="Modifica immagine" aria-label="Modifica immagine spazio"
+                    (click)="imageInput.click()">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button matIconButton type="button" matTooltip="Elimina immagine" aria-label="Elimina immagine spazio"
+                    [disabled]="!imageSrc()" (click)="removeImage()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+            }
         </div>
     </div>
 
