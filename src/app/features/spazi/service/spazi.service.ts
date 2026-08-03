@@ -24,6 +24,10 @@ export class SpaziService {
     });
   }
 
+  eliminaSpazio(id: number): Observable<void> {
+    return this.http.delete<void>(`${env.environment.apiUrl}/spazi/${id}`);
+  }
+
   creaSpazio(payload: SpazioPayload): Observable<SpazioDTO> {
     return this.http.post<SpazioDTO>(
       `${env.environment.apiUrl}/spazi/nuovo`,

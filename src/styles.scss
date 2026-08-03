@@ -169,9 +169,14 @@ h6 {
 // FIX TAILWIND 4 con ANGULAR MATERIAL 3
 // ==========================================================================
 
-// 1. ICONE (Material Symbols & Icons)
-.filled {
-    font-variation-settings: 'FILL' 1 !important;
+/* Configurazione di default: TUTTE le icone saranno FILLED */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
+}
+
+/* Classe speciale per forzare l'effetto OUTLINED */
+.icon-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
 }
 
 mat-icon[color="primary"] {

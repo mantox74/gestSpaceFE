@@ -14,6 +14,7 @@ import { SpazioDetail } from '@app/features/spazi/components/spazio-detail/spazi
 import { SpazioEditForm } from '@app/features/spazi/components/spazio-edit-form/spazio-edit-form';
 import { SpaziDTO, SpaziFilters, SpazioDTO } from '@app/features/spazi/model/spazi.model';
 import { SpaziService } from '@app/features/spazi/service/spazi.service';
+import { DynamicDialogConfirm } from '@app/shared/components/dynamic-dialog-confirm/dynamic-dialog-confirm';
 import {
   DynamicDialog,
   DynamicDialogAction,
@@ -133,7 +134,32 @@ export class SpaziList {
    */
   eliminaSpazio(spazio: SpazioDTO, event: MouseEvent): void {
     this.stopPropagation(event); // Evita che l'evento si propaghi ad altri elementi
-    alert('Elimina spazio:' + JSON.stringify(spazio, null, 2));
+    this.dialog
+      .open(DynamicDialogConfirm, {
+        width: 'min(32rem, 96vw)',
+        maxWidth: '96vw',
+        data: {
+          title: 'Conferma eliminazione',
+          text: `Sei sicuro di voler eliminare lo spazio <strong>${spazio.nome}</strong>?`,
+          closeLabel: 'Annulla',
+          okLabel: 'Elimina',
+        },
+      })
+      .afterClosed()
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.spaziService.eliminaSpazio(spazio.id).subscribe({
+            next: () => {
+              this.snackBar.showSuccess('Spazio eliminato correttamente');
+              this.refresh.update((value) => value + 1);
+            },
+            error: (error: unknown) => {
+              const message = this.getErrorMessage(error);
+              this.snackBar.showError(message);
+            },
+          });
+        }
+      });
   }
 
   /**

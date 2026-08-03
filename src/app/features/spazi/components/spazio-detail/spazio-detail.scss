@@ -108,13 +108,15 @@ mat-chip {
     &.spazio-detail__status--active {
         @include mat.chips-overrides((elevated-container-color: var(--mat-sys-tertiary),
                 label-text-color: var(--mat-sys-on-tertiary),
-                with-icon-icon-color: var(--mat-sys-on-tertiary)));
+                with-icon-icon-color: var(--mat-sys-on-tertiary),
+                outline-color: var(--mat-sys-tertiary)));
     }
 
     &.spazio-detail__status--inactive {
         @include mat.chips-overrides((elevated-container-color: var(--mat-sys-error),
                 label-text-color: var(--mat-sys-on-error),
-                with-icon-icon-color: var(--mat-sys-on-error)));
+                with-icon-icon-color: var(--mat-sys-on-error),
+                outline-color: var(--mat-sys-error)));
     }
 }
 

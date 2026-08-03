@@ -1,0 +1,21 @@
+<section class="p-6">
+    <header class="dynamic-dialog-confirm__header">
+        <h1 mat-dialog-title>{{ data.title }}</h1>
+        <button mat-icon-button (click)="close()">
+            <mat-icon class="dynamic-dialog-confirm__icon" aria-hidden="true">close</mat-icon>
+        </button>
+    </header>
+    <mat-dialog-content>
+        <div class="dynamic-dialog-confirm__text" [innerHTML]="sanitizedText"></div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" class="!mt-4">
+        <button type="button" matButton="outlined" (click)="close()">
+            {{ closeLabel }}
+        </button>
+
+        <button type="button" matButton="filled" (click)="confirm()">
+            {{ okLabel }}
+        </button>
+    </mat-dialog-actions>
+</section>
