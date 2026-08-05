@@ -1,0 +1,84 @@
+<article class="preventivo-detail">
+    <section class="preventivo-detail__content" aria-labelledby="preventivo-detail-title">
+        <div class="preventivo-detail__heading">
+            <div class="preventivo-detail__heading-text">
+                <p class="preventivo-detail__eyebrow">Preventivo</p>
+                <h2 id="preventivo-detail-title">#{{ preventivo().id }}</h2>
+            </div>
+
+            <mat-chip-set aria-label="Stato preventivo">
+                <mat-chip>
+                    <mat-icon>contract</mat-icon>
+                    <span>{{ statoLabel() }}</span>
+                </mat-chip>
+            </mat-chip-set>
+        </div>
+
+        <div class="preventivo-detail__scroll-content">
+            <div class="preventivo-detail__section">
+                <h3>Cliente</h3>
+                <p>{{ clienteLabel() }}</p>
+            </div>
+
+            <div class="preventivo-detail__section">
+                <h3>Spazio</h3>
+                <p>{{ preventivo().spazio.nome }}</p>
+            </div>
+
+            <div>
+                <h3>Periodo</h3>
+                <dl class="preventivo-detail__grid">
+                    @for (item of periodo(); track item.label) {
+                    <div class="preventivo-detail__metric">
+                        <dt>{{ item.label }}</dt>
+                        <dd>{{ item.value }}</dd>
+                    </div>
+                    }
+                </dl>
+            </div>
+
+            <div>
+                <h3>Riepilogo economico</h3>
+                <dl class="preventivo-detail__grid">
+                    @for (item of importi(); track item.label) {
+                    <div class="preventivo-detail__metric">
+                        <dt>{{ item.label }}</dt>
+                        <dd>{{ item.value }}</dd>
+                    </div>
+                    }
+                </dl>
+            </div>
+
+            <div class="preventivo-detail__section">
+                <h3>Note</h3>
+                <p>{{ preventivo().note || 'Nessuna nota inserita.' }}</p>
+            </div>
+
+            @if (hasSconto()) {
+            <div class="preventivo-detail__section">
+                <h3>Note sconto</h3>
+                <p>{{ preventivo().sconto_manuale_note || 'Nessuna nota sconto inserita.' }}</p>
+            </div>
+            }
+        </div>
+
+        <div class="preventivo-detail__actions">
+            <button matButton="filled" type="button" (click)="inviaPreventivo()">
+                <mat-icon>send</mat-icon>
+                Invia preventivo
+            </button>
+            <button matButton="outlined" type="button" (click)="stampaPreventivo()">
+                <mat-icon>print</mat-icon>
+                Stampa preventivo
+            </button>
+            <button matButton="outlined" type="button" (click)="convertiPreventivo()">
+                <mat-icon>event_available</mat-icon>
+                Converti in prenotazione
+            </button>
+            <button matButton="outlined" type="button" (click)="chiudiDialog()">
+                <mat-icon>close</mat-icon>
+                Chiudi
+            </button>
+        </div>
+    </section>
+</article>

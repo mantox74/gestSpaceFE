@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+﻿import { Routes } from '@angular/router';
 import { authGuard } from '@app/core/auth/auth.guard';
 
 export const preventiviRoutes: Routes = [

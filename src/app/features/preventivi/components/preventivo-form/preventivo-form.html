@@ -1,0 +1,132 @@
+<form class="preventivo-form grid grid-cols-1 gap-4 md:grid-cols-2" (submit)="$event.preventDefault()">
+    <mat-form-field>
+        <mat-label>Cliente</mat-label>
+        <mat-select [formField]="preventivoForm.cliente_id">
+            @for (cliente of clientiOptions(); track cliente.id) {
+            <mat-option [value]="cliente.id">{{ clienteOptionLabel(cliente) }}</mat-option>
+            }
+        </mat-select>
+        @if (preventivoForm.cliente_id().touched() && preventivoForm.cliente_id().invalid()) {
+        @for (error of preventivoForm.cliente_id().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Spazio</mat-label>
+        <mat-select [formField]="preventivoForm.spazio_id">
+            @for (spazio of spaziOptions(); track spazio.id) {
+            <mat-option [value]="spazio.id">{{ spazio.nome }}</mat-option>
+            }
+        </mat-select>
+        @if (preventivoForm.spazio_id().touched() && preventivoForm.spazio_id().invalid()) {
+        @for (error of preventivoForm.spazio_id().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Importo netto</mat-label>
+        <input matInput [value]="importoNettoLabel()" readonly />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Importo IVA inclusa</mat-label>
+        <input matInput [value]="importoIvaInclusaLabel()" readonly />
+    </mat-form-field>
+
+    @if (isEditMode()) {
+    @if (showDataInvio()) {
+    <mat-form-field>
+        <mat-label>Data invio</mat-label>
+        <input matInput [value]="dataInvioLabel()" readonly />
+    </mat-form-field>
+    }
+    }
+
+    <mat-form-field>
+        <mat-label>Stato</mat-label>
+        <mat-select [formField]="preventivoForm.stato">
+            <mat-option value="BOZZA">Bozza</mat-option>
+            <mat-option value="INVIATO">Inviato</mat-option>
+            <mat-option value="ACCETTATO">Accettato</mat-option>
+            <mat-option value="RIFIUTATO">Rifiutato</mat-option>
+            <mat-option value="ANNULLATO">Annullato</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="md:col-span-2">
+        <mat-label>Periodo</mat-label>
+        <mat-date-range-input [rangePicker]="periodoPicker" (click)="periodoPicker.open()">
+            <input matStartDate [formField]="preventivoForm.data_inizio" placeholder="Data inizio" />
+            <input matEndDate [formField]="preventivoForm.data_fine" placeholder="Data fine" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="periodoPicker" />
+        <mat-date-range-picker #periodoPicker />
+        @if (preventivoForm.data_inizio().touched() && preventivoForm.data_inizio().invalid()) {
+        @for (error of preventivoForm.data_inizio().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+        @if (preventivoForm.data_fine().touched() && preventivoForm.data_fine().invalid()) {
+        @for (error of preventivoForm.data_fine().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    @if (showDataAccettazione()) {
+    <mat-form-field>
+        <mat-label>Data accettazione</mat-label>
+        <input matInput [matDatepicker]="dataAccettazionePicker" [formField]="preventivoForm.data_accettazione"
+            (click)="dataAccettazionePicker.open()" />
+        <mat-datepicker-toggle matIconSuffix [for]="dataAccettazionePicker" />
+        <mat-datepicker #dataAccettazionePicker />
+    </mat-form-field>
+    }
+
+    <mat-form-field>
+        <mat-label>Tipo sconto</mat-label>
+        <mat-select [formField]="preventivoForm.sconto_manuale_tipo">
+            <mat-option value="">Nessuno</mat-option>
+            <mat-option value="IMPORTO">Importo</mat-option>
+            <mat-option value="PERCENTUALE">Percentuale</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    @if (showScontoFields()) {
+    <mat-form-field>
+        <mat-label>Valore sconto</mat-label>
+        <input matInput type="number" [formField]="preventivoForm.sconto_manuale_valore" />
+        @if (preventivoForm.sconto_manuale_valore().touched() && preventivoForm.sconto_manuale_valore().invalid()) {
+        @for (error of preventivoForm.sconto_manuale_valore().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+    }
+
+    <mat-form-field>
+        <mat-label>IVA (%)</mat-label>
+        <input matInput type="number" [formField]="preventivoForm.iva_percentuale" />
+        @if (preventivoForm.iva_percentuale().touched() && preventivoForm.iva_percentuale().invalid()) {
+        @for (error of preventivoForm.iva_percentuale().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    @if (showScontoFields()) {
+    <mat-form-field class="md:col-span-2">
+        <mat-label>Note sconto</mat-label>
+        <textarea matInput rows="2" [formField]="preventivoForm.sconto_manuale_note"></textarea>
+    </mat-form-field>
+    }
+
+    <mat-form-field class="md:col-span-2">
+        <mat-label>Note</mat-label>
+        <textarea matInput rows="3" [formField]="preventivoForm.note"></textarea>
+    </mat-form-field>
+</form>

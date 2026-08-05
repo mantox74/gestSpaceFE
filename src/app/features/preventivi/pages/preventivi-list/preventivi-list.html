@@ -1,36 +1,86 @@
-<div class="preventivi-list__wrapper">
-    <h1>Lista preventivi</h1>
+<section class="preventivi-list__wrapper">
+    <header class="preventivi-list__header flex justify-between items-center">
+        <h1>Lista preventivi</h1>
 
-    <div class="function-menu__wrapper flex justify-end mb-4 mt-4">
-        <button matButton="filled">
-            <mat-icon>add</mat-icon>
-            Aggiungi preventivo
-        </button>
+        <div class="function-menu__wrapper flex justify-end gap-4 mb-4 mt-4">
+            <button matButton="filled" type="button" (click)="aggiungiPreventivo()">
+                <mat-icon>add</mat-icon>
+                Aggiungi preventivo
+            </button>
+
+            <button matButton="outlined" type="button" (click)="toggleApplicableFilters()"
+                [attr.aria-expanded]="showApplicableFilters()" aria-controls="preventivi-search-panel">
+                <mat-icon>{{ showApplicableFilters() ? 'filter_alt_off' : 'filter_alt' }}</mat-icon>
+                {{ showApplicableFilters() ? 'Nascondi filtri' : 'Mostra filtri' }}
+            </button>
+        </div>
+    </header>
+
+    <div id="preventivi-search-panel">
+        <app-preventivi-search-form [filters]="filters()" [showFilters]="showApplicableFilters()"
+            (filtersChange)="onFiltersChange($event)" />
     </div>
 
-    <table mat-table [dataSource]="preventiviList()" class="mat-elevation-z8">
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    @if (preventiviData().length) {
+    <table mat-table [dataSource]="preventiviData()" matSort [matSortActive]="orderBy()" [matSortDirection]="orderDir()"
+        class="mat-elevation-z8">
+        <ng-container matColumnDef="stato">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Stato </th>
+            <td mat-cell *matCellDef="let element"> {{ element.stato }} </td>
         </ng-container>
 
         <ng-container matColumnDef="cliente_nome">
             <th mat-header-cell *matHeaderCellDef> Cliente </th>
-            <td mat-cell *matCellDef="let element"> {{element.cliente.cognome}} {{element.cliente.nome}} </td>
+            <td mat-cell *matCellDef="let element"> {{ element.cliente.cognome }} {{ element.cliente.nome }} </td>
         </ng-container>
 
         <ng-container matColumnDef="spazio_nome">
             <th mat-header-cell *matHeaderCellDef> Spazio </th>
-            <td mat-cell *matCellDef="let element"> {{element.spazio.nome}} </td>
+            <td mat-cell *matCellDef="let element"> {{ element.spazio.nome }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="totale_preventivo">
-            <th mat-header-cell *matHeaderCellDef> Totale Preventivo </th>
-            <td mat-cell *matCellDef="let element"> {{element.importo_totale}} </td>
+        <ng-container matColumnDef="data_inizio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Inizio </th>
+            <td mat-cell *matCellDef="let element"> {{ element.data_inizio | date: 'dd/MM/yyyy' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="data_fine">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fine </th>
+            <td mat-cell *matCellDef="let element"> {{ element.data_fine | date: 'dd/MM/yyyy' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="importo_totale">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Totale </th>
+            <td mat-cell *matCellDef="let element"> {{ element.importo_totale | currency: 'EUR' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="azioni">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button matIconButton aria-label="Dettaglio" matTooltip="Visualizza dettaglio"
+                    (click)="dettaglioPreventivo(element, $event)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <button matIconButton aria-label="Modifica" matTooltip="Modifica preventivo"
+                    (click)="modificaPreventivo(element, $event)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button matIconButton aria-label="Annulla" matTooltip="Annulla preventivo"
+                    (click)="annullaPreventivo(element, $event)">
+                    <mat-icon color="warn">delete</mat-icon>
+                </button>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <!-- {{preventiviList()|json}} -->
-</div>
+
+    <mat-paginator [length]="totalElements()" [pageSize]="limit()" [pageIndex]="page() - 1"
+        [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)" aria-label="Seleziona pagina dei preventivi"
+        class="mat-elevation-z8">
+    </mat-paginator>
+    } @else {
+    <p>Nessun preventivo disponibile.</p>
+    }
+</section>

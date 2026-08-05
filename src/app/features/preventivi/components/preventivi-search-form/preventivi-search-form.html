@@ -1,0 +1,73 @@
+<section class="preventivi-search" aria-label="Filtri preventivi" [class.mb-10]="showFilters()">
+    <app-chips-ricerca [chips]="activeChips()" (removed)="removeFilter($event)" />
+
+    @if (showFilters()) {
+    <form class="preventivi-search__form grid grid-cols-1 gap-4 lg:grid-cols-4 xl:grid-cols-6"
+        (submit)="$event.preventDefault(); applyFilters()">
+        <mat-form-field class="col-span-1 lg:col-span-4 xl:col-span-3">
+            <mat-label>Ricerca</mat-label>
+            <input matInput type="search" [formField]="filterForm.search" placeholder="Nome o cognome cliente" />
+        </mat-form-field>
+        <span class="hidden xl:inline-block xl:col-span-3"></span>
+
+        <mat-form-field>
+            <mat-label>Stato</mat-label>
+            <mat-select [formField]="filterForm.stato">
+                <mat-option value="">Tutti</mat-option>
+                <mat-option value="BOZZA">Bozza</mat-option>
+                <mat-option value="INVIATO">Inviato</mat-option>
+                <mat-option value="ACCETTATO">Accettato</mat-option>
+                <mat-option value="RIFIUTATO">Rifiutato</mat-option>
+                <mat-option value="ANNULLATO">Annullato</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Cliente</mat-label>
+            <mat-select [formField]="filterForm.cliente_id">
+                <mat-option [value]="null">Tutti</mat-option>
+                @for (cliente of clientiOptions(); track cliente.id) {
+                <mat-option [value]="cliente.id">{{ clienteOptionLabel(cliente) }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Spazio</mat-label>
+            <mat-select [formField]="filterForm.spazio_id">
+                <mat-option [value]="null">Tutti</mat-option>
+                @for (spazio of spaziOptions(); track spazio.id) {
+                <mat-option [value]="spazio.id">{{ spazioOptionLabel(spazio) }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Data inizio da</mat-label>
+            <input matInput [matDatepicker]="dataInizioDaPicker" [formField]="filterForm.data_inizio_da"
+                (click)="dataInizioDaPicker.open()" />
+            <mat-datepicker-toggle matIconSuffix [for]="dataInizioDaPicker" />
+            <mat-datepicker #dataInizioDaPicker />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Data inizio a</mat-label>
+            <input matInput [matDatepicker]="dataInizioAPicker" [formField]="filterForm.data_inizio_a"
+                (click)="dataInizioAPicker.open()" />
+            <mat-datepicker-toggle matIconSuffix [for]="dataInizioAPicker" />
+            <mat-datepicker #dataInizioAPicker />
+        </mat-form-field>
+
+        <div class="preventivi-search__actions flex justify-center gap-4 col-span-1 lg:col-span-4 xl:col-span-6">
+            <button matButton="filled" type="submit">
+                <mat-icon>filter_alt</mat-icon>
+                Applica filtri
+            </button>
+            <button matButton="outlined" type="button" (click)="resetFilters()">
+                <mat-icon>filter_alt_off</mat-icon>
+                Cancella filtri
+            </button>
+        </div>
+    </form>
+    }
+</section>

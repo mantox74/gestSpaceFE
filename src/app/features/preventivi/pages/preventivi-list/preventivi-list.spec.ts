@@ -1,3 +1,4 @@
+import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PreventiviList } from './preventivi-list';
@@ -9,11 +10,12 @@ describe('PreventiviList', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PreventiviList],
+      providers: [provideHttpClient()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PreventiviList);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
