@@ -1,0 +1,25 @@
+<section class="clienti-search" aria-label="Filtri clienti">
+    <app-chips-ricerca [chips]="activeChips()" (removed)="removeFilter($event)" />
+
+    @if (showFilters()) {
+    <form class="clienti-search__form grid grid-cols-1 gap-4 lg:grid-cols-4"
+        (submit)="$event.preventDefault(); applyFilters()">
+        <mat-form-field class="col-span-1 lg:col-span-2">
+            <mat-label>Ricerca</mat-label>
+            <input matInput type="search" [formField]="filterForm.search"
+                placeholder="Nome, cognome, email, codice fiscale o partita IVA" />
+        </mat-form-field>
+
+        <div class="clienti-search__actions flex justify-start gap-4 col-span-1 lg:col-span-2">
+            <button matButton="filled" type="submit">
+                <mat-icon>filter_alt</mat-icon>
+                Applica filtri
+            </button>
+            <button matButton="outlined" type="button" (click)="resetFilters()">
+                <mat-icon>filter_alt_off</mat-icon>
+                Cancella filtri
+            </button>
+        </div>
+    </form>
+    }
+</section>

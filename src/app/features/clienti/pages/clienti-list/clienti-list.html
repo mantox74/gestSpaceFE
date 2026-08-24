@@ -1,0 +1,87 @@
+<section class="clienti-list__wrapper">
+    <header class="clienti-list__header flex justify-between items-center">
+        <h1>Lista clienti</h1>
+
+        <div class="function-menu__wrapper flex justify-end gap-4 mb-4 mt-4">
+            <button matButton="filled" type="button" (click)="aggiungiCliente()">
+                <mat-icon>add</mat-icon>
+                Aggiungi cliente
+            </button>
+
+            <button matButton="outlined" type="button" (click)="toggleApplicableFilters()"
+                [attr.aria-expanded]="showApplicableFilters()" aria-controls="clienti-search-panel">
+                <mat-icon>{{ showApplicableFilters() ? 'filter_alt_off' : 'filter_alt' }}</mat-icon>
+                {{ showApplicableFilters() ? 'Nascondi filtri' : 'Mostra filtri' }}
+            </button>
+        </div>
+    </header>
+
+    <div id="clienti-search-panel">
+        <app-clienti-search-form [filters]="filters()" [showFilters]="showApplicableFilters()"
+            (filtersChange)="onFiltersChange($event)" />
+    </div>
+
+    @if (clientiData().length) {
+    <table mat-table [dataSource]="clientiData()" matSort [matSortActive]="orderBy()" [matSortDirection]="orderDir()"
+        class="mat-elevation-z8">
+        <ng-container matColumnDef="nominativo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="cognome"> Cliente </th>
+            <td mat-cell *matCellDef="let element"> {{ element.cognome }} {{ element.nome }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let element"> {{ element.email || '-' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="telefono">
+            <th mat-header-cell *matHeaderCellDef> Telefono </th>
+            <td mat-cell *matCellDef="let element"> {{ element.telefono || '-' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="citta">
+            <th mat-header-cell *matHeaderCellDef> Città </th>
+            <td mat-cell *matCellDef="let element"> {{ element.citta || '-' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="codice_fiscale">
+            <th mat-header-cell *matHeaderCellDef> Codice fiscale </th>
+            <td mat-cell *matCellDef="let element"> {{ element.codice_fiscale || '-' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totale_prenotazioni">
+            <th mat-header-cell *matHeaderCellDef> Prenotazioni </th>
+            <td mat-cell *matCellDef="let element"> {{ element.totale_prenotazioni || 0 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="azioni">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button matIconButton aria-label="Visualizza dettagli" matTooltip="Visualizza dettagli cliente"
+                    (click)="visualizzaDettagliCliente(element, $event)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <button matIconButton aria-label="Modifica" matTooltip="Modifica cliente"
+                    (click)="modificaCliente(element, $event)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button matIconButton aria-label="Elimina" matTooltip="Elimina cliente"
+                    (click)="eliminaCliente(element, $event)">
+                    <mat-icon color="warn">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="visualizzaDettagliCliente(row, $event)">
+        </tr>
+    </table>
+
+    <mat-paginator [length]="totalElements()" [pageSize]="limit()" [pageIndex]="page() - 1"
+        [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)" aria-label="Seleziona pagina dei clienti"
+        class="mat-elevation-z8">
+    </mat-paginator>
+    } @else {
+    <p>Nessun cliente disponibile, inserirli tramite il bottone aggiungi cliente.</p>
+    }
+</section>

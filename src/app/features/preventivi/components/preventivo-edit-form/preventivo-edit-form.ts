@@ -1,6 +1,6 @@
 import { Component, inject, input, viewChild } from '@angular/core';
 import { PreventivoForm } from '@app/features/preventivi/components/preventivo-form/preventivo-form';
-import { PreventivoDTO } from '@app/features/preventivi/model/preventivi';
+import { PreventivoDTO } from '@app/features/preventivi/model/preventivi.interfaces';
 import { PreventiviService } from '@app/features/preventivi/services/preventivi.service';
 import { Observable } from 'rxjs/internal/Observable';
 

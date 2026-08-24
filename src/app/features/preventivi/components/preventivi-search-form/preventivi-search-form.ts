@@ -13,7 +13,7 @@ import {
   PreventiviFilterKey,
   PreventiviFilters,
   PreventivoStato,
-} from '@app/features/preventivi/model/preventivi';
+} from '@app/features/preventivi/model/preventivi.interfaces';
 import { PreventiviService } from '@app/features/preventivi/services/preventivi.service';
 import { SpazioDTO } from '@app/features/spazi/model/spazi.model';
 import { SpaziService } from '@app/features/spazi/service/spazi.service';

@@ -17,7 +17,7 @@ import {
   PreventiviFilters,
   PreventivoDTO,
   PreventivoSortKey,
-} from '@app/features/preventivi/model/preventivi';
+} from '@app/features/preventivi/model/preventivi.interfaces';
 import { PreventiviService } from '@app/features/preventivi/services/preventivi.service';
 import { DynamicDialogConfirm } from '@app/shared/components/dynamic-dialog-confirm/dynamic-dialog-confirm';
 import {

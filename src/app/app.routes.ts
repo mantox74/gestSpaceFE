@@ -26,6 +26,12 @@ export const routes: Routes = [
     canActivateChild: [authGuard],
   },
   {
+    path: 'clienti',
+    loadChildren: () => import('@features/clienti/clienti.routes').then((m) => m.clientiRoutes),
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
+  },
+  {
     path: 'spazi',
     loadChildren: () => import('@features/spazi/spazi.routes').then((m) => m.spaziRoutes),
     canActivate: [authGuard],

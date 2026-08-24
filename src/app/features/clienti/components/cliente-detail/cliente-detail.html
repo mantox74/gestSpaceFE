@@ -1,0 +1,50 @@
+<article class="cliente-detail">
+    <section class="cliente-detail__content" aria-labelledby="cliente-detail-title">
+        <div class="cliente-detail__heading">
+            <div class="cliente-detail__heading-text">
+                <p class="cliente-detail__eyebrow">Cliente</p>
+                <h2 id="cliente-detail-title">{{ nominativo() }}</h2>
+            </div>
+
+            <mat-chip-set aria-label="Prenotazioni cliente">
+                <mat-chip>
+                    <mat-icon>event</mat-icon>
+                    <span>{{ cliente().totale_prenotazioni || 0 }} prenotazioni</span>
+                </mat-chip>
+            </mat-chip-set>
+        </div>
+
+        <div class="cliente-detail__scroll-content">
+            <div>
+                <h3>Contatti</h3>
+                <dl class="cliente-detail__grid">
+                    @for (item of contatti(); track item.label) {
+                    <div class="cliente-detail__metric">
+                        <dt>{{ item.label }}</dt>
+                        <dd>{{ item.value || '-' }}</dd>
+                    </div>
+                    }
+                </dl>
+            </div>
+
+            <div>
+                <h3>Dati fiscali</h3>
+                <dl class="cliente-detail__grid">
+                    @for (item of fiscali(); track item.label) {
+                    <div class="cliente-detail__metric">
+                        <dt>{{ item.label }}</dt>
+                        <dd>{{ item.value || '-' }}</dd>
+                    </div>
+                    }
+                </dl>
+            </div>
+
+            <div class="cliente-detail__section">
+                <h3>Indirizzo</h3>
+                <div class="cliente-detail__metric">
+                    <p>{{ indirizzo() || 'Nessun indirizzo inserito.' }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</article>

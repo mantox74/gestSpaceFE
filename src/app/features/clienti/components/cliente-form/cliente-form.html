@@ -1,0 +1,81 @@
+<form class="cliente-form grid grid-cols-1 gap-4 md:grid-cols-2" (submit)="$event.preventDefault()">
+    <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput [formField]="clienteForm.nome" />
+        @if (clienteForm.nome().touched() && clienteForm.nome().invalid()) {
+        @for (error of clienteForm.nome().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Cognome</mat-label>
+        <input matInput [formField]="clienteForm.cognome" />
+        @if (clienteForm.cognome().touched() && clienteForm.cognome().invalid()) {
+        @for (error of clienteForm.cognome().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [formField]="clienteForm.email" />
+        @if (clienteForm.email().touched() && clienteForm.email().invalid()) {
+        @for (error of clienteForm.email().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Telefono</mat-label>
+        <input matInput type="tel" [formField]="clienteForm.telefono" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Codice fiscale</mat-label>
+        <input matInput [formField]="clienteForm.codice_fiscale" />
+        @if (clienteForm.codice_fiscale().touched() && clienteForm.codice_fiscale().invalid()) {
+        @for (error of clienteForm.codice_fiscale().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Partita IVA</mat-label>
+        <input matInput [formField]="clienteForm.p_iva" />
+        @if (clienteForm.p_iva().touched() && clienteForm.p_iva().invalid()) {
+        @for (error of clienteForm.p_iva().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+        }
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Indirizzo</mat-label>
+        <input matInput [formField]="clienteForm.indirizzo" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Numero civico</mat-label>
+        <input matInput [formField]="clienteForm.numero_civico" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>CAP</mat-label>
+        <input matInput [formField]="clienteForm.cap" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Città</mat-label>
+        <input matInput [formField]="clienteForm.citta" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Provincia</mat-label>
+        <input matInput [formField]="clienteForm.provincia" />
+    </mat-form-field>
+</form>

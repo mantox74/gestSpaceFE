@@ -8,7 +8,7 @@ import {
   PreventivoMessageResponse,
   PreventivoPayload,
   PreventivoStato,
-} from '@app/features/preventivi/model/preventivi';
+} from '@app/features/preventivi/model/preventivi.interfaces';
 import * as env from '@env/environment';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';

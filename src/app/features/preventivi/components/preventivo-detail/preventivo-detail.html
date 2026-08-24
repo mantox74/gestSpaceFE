@@ -15,16 +15,21 @@
         </div>
 
         <div class="preventivo-detail__scroll-content">
-            <div class="preventivo-detail__section">
-                <h3>Cliente</h3>
-                <p>{{ clienteLabel() }}</p>
-            </div>
+            <div class="flex gap-4">
+                <div class="preventivo-detail__section">
+                    <h3>Cliente</h3>
+                    <div class="preventivo-detail__metric">
+                        <p [innerHTML]="clienteLabel()"></p>
+                    </div>
+                </div>
 
-            <div class="preventivo-detail__section">
-                <h3>Spazio</h3>
-                <p>{{ preventivo().spazio.nome }}</p>
+                <div class="preventivo-detail__section">
+                    <h3>Spazio</h3>
+                    <div class="preventivo-detail__metric">
+                        <p>{{ preventivo().spazio.nome }}</p>
+                    </div>
+                </div>
             </div>
-
             <div>
                 <h3>Periodo</h3>
                 <dl class="preventivo-detail__grid">

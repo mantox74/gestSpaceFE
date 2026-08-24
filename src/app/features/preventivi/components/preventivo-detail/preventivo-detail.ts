@@ -3,7 +3,7 @@ import { Component, computed, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-import { PreventivoDTO } from '@app/features/preventivi/model/preventivi';
+import { PreventivoDTO } from '@app/features/preventivi/model/preventivi.interfaces';
 
 type DetailItem = {
   label: string;
@@ -26,7 +26,8 @@ export class PreventivoDetail {
   clienteLabel = computed(() => {
     const cliente = this.preventivo().cliente;
     const identificativo = cliente.codice_fiscale || cliente.p_iva || 'nessun CF/P.IVA';
-    return `${cliente.cognome} ${cliente.nome} - ${identificativo}`;
+
+    return `<span class="titolo">${cliente.cognome} ${cliente.nome} - ${identificativo}</span><br><b>ciccio</b>`;
   });
 
   statoLabel = computed(() => this.formatStato(this.preventivo().stato));
@@ -56,12 +57,12 @@ export class PreventivoDetail {
     const preventivo = this.preventivo();
     const items: DetailItem[] = [
       { label: 'Prezzo netto', value: this.formatCurrency(this.prezzoNetto()) },
-      { label: 'Totale preventivo', value: this.formatCurrency(preventivo.importo_totale) },
       { label: 'IVA', value: `${Number(preventivo.iva_percentuale ?? 22)}%` },
+      { label: 'Totale preventivo', value: this.formatCurrency(preventivo.importo_totale) },
     ];
 
     if (this.hasSconto()) {
-      items.push({ label: 'Sconto', value: this.formatSconto() });
+      items.splice(items.length - 1, 0, { label: 'Sconto', value: this.formatSconto() });
     }
 
     return items;
